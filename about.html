@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,17 +49,22 @@ h1 em{font-style:normal;color:var(--accent);}
 .faq-item:last-child{border-bottom:none;}
 .faq-q{font-size:15px;font-weight:700;margin-bottom:10px;color:var(--text);}
 .faq-a{font-size:14px;color:var(--muted);line-height:1.7;}
-.support-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 32px;text-align:center;}
-.support-box h3{font-size:18px;font-weight:800;margin-bottom:8px;}
-.support-box p{font-size:14px;color:var(--muted);margin-bottom:20px;}
-.support-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;}
-.slink{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 18px;text-decoration:none;font-size:13px;font-family:'Space Mono',monospace;color:var(--text);transition:border-color .2s;}
+.support-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;display:flex;gap:32px;align-items:center;}
+.support-qr-wrap{background:#fff;border-radius:10px;padding:10px;width:140px;height:140px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.support-qr-wrap canvas,.support-qr-wrap img{border-radius:4px;}
+.support-qr-label{text-align:center;font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);margin-top:8px;letter-spacing:1px;text-transform:uppercase;}
+.support-info{flex:1;}
+.support-info h3{font-size:18px;font-weight:800;margin-bottom:8px;}
+.support-info p{font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.6;}
+.support-links{display:flex;flex-direction:column;gap:10px;}
+.slink{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-decoration:none;font-size:12px;font-family:'Space Mono',monospace;color:var(--text);transition:border-color .2s;word-break:break-all;}
 .slink:hover{border-color:var(--accent);}
 footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
 .ftr-l{font-size:13px;color:var(--muted);font-family:'Space Mono',monospace;}
 .ftr-l a{color:var(--accent);text-decoration:none;}
-@media(max-width:680px){header{padding:0 18px;}.wrap{padding:40px 18px 80px;}.values{grid-template-columns:1fr;}footer{padding:18px;}}
+@media(max-width:680px){header{padding:0 18px;}.wrap{padding:40px 18px 80px;}.values{grid-template-columns:1fr;}.support-box{flex-direction:column;align-items:center;text-align:center;}.support-links{align-items:stretch;}footer{padding:18px;}}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 <header>
@@ -135,16 +141,26 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24
       <h3>Keep the directory running</h3>
       <p>Not a company. Not VC-funded. Donations via Lightning keep the lights on.</p>
       <div class="support-links">
-        <a class="slink" href="lightning:hiddenranger445@minibits.cash">&#9889; hiddenranger445@minibits.cash</a>
+        <a class="slink" href="lightning:hiddenranger445@minibits.cash">&#9889; <span class="__cf_email__" data-cfemail="4e26272a2a2b203c2f20292b3c7a7a7b0e232720272c273a3d602d2f3d26">[email&#160;protected]</span></a>
         <a class="slink" href="https://primal.net/p/npub1a2049m2l73ylehvz3kw6uspr7tuld6r2csqqqce8l2seqjnjy8xszr6a8g" target="_blank">&#128995; Nostr profile</a>
       </div>
     </div>
   </div>
 </div>
-
 <footer>
   <div class="ftr-l">Built for the <a href="https://nostr.com" target="_blank">Nostr</a> community &middot; <a href="index.html">Back to directory</a></div>
   <div class="ftr-l">nostrmarket.org</div>
 </footer>
+
+<script>
+new QRCode(document.getElementById('qr-about'), {
+  text: 'lightning:hiddenranger445@minibits.cash',
+  width: 120,
+  height: 120,
+  colorDark: '#000000',
+  colorLight: '#ffffff',
+  correctLevel: QRCode.CorrectLevel.M
+});
+</script>
 </body>
 </html>
