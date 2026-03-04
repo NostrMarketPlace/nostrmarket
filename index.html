@@ -141,14 +141,12 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24
 .nbdot{width:8px;height:8px;border-radius:50%;background:var(--accent);}
 .don{display:flex;align-items:center;gap:7px;background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.3);border-radius:8px;padding:7px 14px;cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;color:var(--accent);transition:all .2s;position:relative;}
 .don:hover{background:rgba(245,166,35,.18);}
-.don-tip{display:none;position:absolute;bottom:calc(100% + 10px);right:0;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;z-index:200;box-shadow:0 8px 32px rgba(0,0,0,.5);width:200px;}
+.don-tip{display:none;position:absolute;bottom:calc(100% + 10px);right:0;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;white-space:nowrap;min-width:250px;z-index:200;box-shadow:0 8px 32px rgba(0,0,0,.4);}
 .don:hover .don-tip{display:block;}
-.don-lbl{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;text-align:center;}
-.don-qr{background:#fff;border-radius:8px;padding:6px;margin:0 auto 10px;width:130px;height:130px;display:flex;align-items:center;justify-content:center;}
-.don-qr img{width:118px;height:118px;display:block;}
-.don-addr{display:flex;align-items:center;justify-content:space-between;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:6px 8px;}
-.don-addr span{font-size:9px;color:var(--text);word-break:break-all;}
-.cbtn{background:var(--accent);color:#000;border:none;border-radius:5px;padding:3px 7px;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;cursor:pointer;flex-shrink:0;}
+.don-lbl{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+.don-addr{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:8px 10px;}
+.don-addr span{font-size:11px;color:var(--text);}
+.cbtn{background:var(--accent);color:#000;border:none;border-radius:5px;padding:3px 8px;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;cursor:pointer;}
 .don-sub{font-size:10px;color:var(--muted);margin-top:8px;text-align:center;}
 .modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:100;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
 .modal-ov.open{display:flex;}
@@ -275,9 +273,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24
     <div class="don">&#9889; Donate
       <div class="don-tip">
         <div class="don-lbl">Support this directory</div>
-        <div class="don-qr"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNDggMTQ4IiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCI+PHJlY3Qgd2lkdGg9IjE0OCIgaGVpZ2h0PSIxNDgiIGZpbGw9IndoaXRlIi8+PGcgZmlsbD0iYmxhY2siPjxyZWN0IHg9IjE2IiB5PSIxNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjIwIiB5PSIxNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjI0IiB5PSIxNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjI4IiB5PSIxNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjMyIiB5PSIxNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjM2IiB5PSIxNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjQwIiB5PSIxNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjUyIiB5PSIxNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjYwIiB5PSIxNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjY0IiB5PSIxNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijc2IiB5PSIxNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjkyIiB5PSIxNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijk2IiB5PSIxNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEwMCIgeT0iMTYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMDQiIHk9IjE2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTA4IiB5PSIxNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjExMiIgeT0iMTYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMTYiIHk9IjE2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTIwIiB5PSIxNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEyNCIgeT0iMTYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjgiIHk9IjE2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTYiIHk9IjIwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNDAiIHk9IjIwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNDgiIHk9IjIwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNTYiIHk9IjIwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNjAiIHk9IjIwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNzYiIHk9IjIwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iODAiIHk9IjIwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iODQiIHk9IjIwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iODgiIHk9IjIwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iOTIiIHk9IjIwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTA0IiB5PSIyMCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEyOCIgeT0iMjAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxNiIgeT0iMjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyNCIgeT0iMjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyOCIgeT0iMjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIzMiIgeT0iMjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0MCIgeT0iMjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI2MCIgeT0iMjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI4MCIgeT0iMjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI4OCIgeT0iMjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMDQiIHk9IjI0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTEyIiB5PSIyNCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjExNiIgeT0iMjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjAiIHk9IjI0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTI4IiB5PSIyNCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjE2IiB5PSIyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjI0IiB5PSIyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjI4IiB5PSIyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjMyIiB5PSIyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjQwIiB5PSIyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjY0IiB5PSIyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjcyIiB5PSIyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijc2IiB5PSIyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjkyIiB5PSIyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijk2IiB5PSIyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEwMCIgeT0iMjgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMDQiIHk9IjI4IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTEyIiB5PSIyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjExNiIgeT0iMjgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjAiIHk9IjI4IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTI4IiB5PSIyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjE2IiB5PSIzMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjI0IiB5PSIzMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjI4IiB5PSIzMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjMyIiB5PSIzMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjQwIiB5PSIzMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjQ4IiB5PSIzMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjUyIiB5PSIzMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjY0IiB5PSIzMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjY4IiB5PSIzMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjcyIiB5PSIzMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijc2IiB5PSIzMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjkyIiB5PSIzMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijk2IiB5PSIzMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEwNCIgeT0iMzIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMTIiIHk9IjMyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTE2IiB5PSIzMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEyMCIgeT0iMzIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjgiIHk9IjMyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTYiIHk9IjM2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNDAiIHk9IjM2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNjAiIHk9IjM2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNjQiIHk9IjM2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNjgiIHk9IjM2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNzYiIHk9IjM2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iODAiIHk9IjM2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iODQiIHk9IjM2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iODgiIHk9IjM2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iOTIiIHk9IjM2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTA0IiB5PSIzNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEyOCIgeT0iMzYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxNiIgeT0iNDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyMCIgeT0iNDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyNCIgeT0iNDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyOCIgeT0iNDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIzMiIgeT0iNDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIzNiIgeT0iNDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0MCIgeT0iNDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0OCIgeT0iNDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI1NiIgeT0iNDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI2NCIgeT0iNDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI3MiIgeT0iNDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI4MCIgeT0iNDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI4OCIgeT0iNDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI5NiIgeT0iNDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMDQiIHk9IjQwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTA4IiB5PSI0MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjExMiIgeT0iNDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMTYiIHk9IjQwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTIwIiB5PSI0MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEyNCIgeT0iNDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjgiIHk9IjQwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNTIiIHk9IjQ0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNjAiIHk9IjQ0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNjgiIHk9IjQ0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iODQiIHk9IjQ0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iODgiIHk9IjQ0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTAwIiB5PSI0NCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjE2IiB5PSI0OCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjI0IiB5PSI0OCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjMyIiB5PSI0OCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjQwIiB5PSI0OCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjUyIiB5PSI0OCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjU2IiB5PSI0OCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjcyIiB5PSI0OCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjgwIiB5PSI0OCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjExMiIgeT0iNDgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjQiIHk9IjQ4IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTYiIHk9IjUyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMjgiIHk9IjUyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMzIiIHk9IjUyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMzYiIHk9IjUyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNTYiIHk9IjUyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNjAiIHk9IjUyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNjQiIHk9IjUyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iODAiIHk9IjUyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iODQiIHk9IjUyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iOTYiIHk9IjUyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTAwIiB5PSI1MiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEwNCIgeT0iNTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMTYiIHk9IjUyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTIwIiB5PSI1MiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEyNCIgeT0iNTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjgiIHk9IjUyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTYiIHk9IjU2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMjAiIHk9IjU2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMjQiIHk9IjU2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMjgiIHk9IjU2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMzYiIHk9IjU2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNDAiIHk9IjU2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNDQiIHk9IjU2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNDgiIHk9IjU2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNjgiIHk9IjU2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iODAiIHk9IjU2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iODgiIHk9IjU2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTAwIiB5PSI1NiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEwNCIgeT0iNTYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMDgiIHk9IjU2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTEyIiB5PSI1NiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEyMCIgeT0iNTYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjQiIHk9IjU2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTI4IiB5PSI1NiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjIwIiB5PSI2MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjI0IiB5PSI2MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjMyIiB5PSI2MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjQ0IiB5PSI2MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjYwIiB5PSI2MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjY0IiB5PSI2MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjgwIiB5PSI2MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijg0IiB5PSI2MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjkyIiB5PSI2MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijk2IiB5PSI2MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEwMCIgeT0iNjAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMDgiIHk9IjYwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTEyIiB5PSI2MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEyOCIgeT0iNjAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxNiIgeT0iNjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyOCIgeT0iNjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0MCIgeT0iNjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0NCIgeT0iNjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI1MiIgeT0iNjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI1NiIgeT0iNjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI2NCIgeT0iNjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI3NiIgeT0iNjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI4MCIgeT0iNjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI4NCIgeT0iNjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI5NiIgeT0iNjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMDAiIHk9IjY0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTA0IiB5PSI2NCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjExNiIgeT0iNjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjQiIHk9IjY0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTI4IiB5PSI2NCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjIwIiB5PSI2OCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjM2IiB5PSI2OCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjQ4IiB5PSI2OCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjY4IiB5PSI2OCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijk2IiB5PSI2OCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEwMCIgeT0iNjgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMDQiIHk9IjY4IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTI0IiB5PSI2OCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEyOCIgeT0iNjgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxNiIgeT0iNzIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyNCIgeT0iNzIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyOCIgeT0iNzIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0MCIgeT0iNzIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0NCIgeT0iNzIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0OCIgeT0iNzIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI1MiIgeT0iNzIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI1NiIgeT0iNzIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI2MCIgeT0iNzIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI3MiIgeT0iNzIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMDAiIHk9IjcyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTA0IiB5PSI3MiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjExMiIgeT0iNzIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjAiIHk9IjcyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTI0IiB5PSI3MiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEyOCIgeT0iNzIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyMCIgeT0iNzYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyNCIgeT0iNzYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyOCIgeT0iNzYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0OCIgeT0iNzYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI2MCIgeT0iNzYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI2NCIgeT0iNzYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI2OCIgeT0iNzYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI3MiIgeT0iNzYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI4NCIgeT0iNzYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI4OCIgeT0iNzYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI5NiIgeT0iNzYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMDgiIHk9Ijc2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTEyIiB5PSI3NiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjE2IiB5PSI4MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjMyIiB5PSI4MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjM2IiB5PSI4MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjQwIiB5PSI4MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjQ0IiB5PSI4MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjUyIiB5PSI4MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjcyIiB5PSI4MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijg0IiB5PSI4MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijk2IiB5PSI4MCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEwMCIgeT0iODAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMDQiIHk9IjgwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMjAiIHk9Ijg0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMjQiIHk9Ijg0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMjgiIHk9Ijg0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMzIiIHk9Ijg0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNDQiIHk9Ijg0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNDgiIHk9Ijg0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNjAiIHk9Ijg0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNjQiIHk9Ijg0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNzIiIHk9Ijg0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iODAiIHk9Ijg0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iOTYiIHk9Ijg0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTAwIiB5PSI4NCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEwNCIgeT0iODQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjAiIHk9Ijg0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTI0IiB5PSI4NCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEyOCIgeT0iODQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxNiIgeT0iODgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyNCIgeT0iODgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyOCIgeT0iODgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIzMiIgeT0iODgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIzNiIgeT0iODgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0MCIgeT0iODgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0NCIgeT0iODgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0OCIgeT0iODgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI2MCIgeT0iODgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI2NCIgeT0iODgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI2OCIgeT0iODgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI4MCIgeT0iODgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI4OCIgeT0iODgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI5NiIgeT0iODgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMDAiIHk9Ijg4IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTI0IiB5PSI4OCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEyOCIgeT0iODgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyMCIgeT0iOTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyOCIgeT0iOTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIzMiIgeT0iOTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIzNiIgeT0iOTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0NCIgeT0iOTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0OCIgeT0iOTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI1MiIgeT0iOTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI2MCIgeT0iOTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI2NCIgeT0iOTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI3NiIgeT0iOTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI4MCIgeT0iOTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI4NCIgeT0iOTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI4OCIgeT0iOTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI5NiIgeT0iOTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMDAiIHk9IjkyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTA0IiB5PSI5MiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEwOCIgeT0iOTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMTIiIHk9IjkyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTI0IiB5PSI5MiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjE2IiB5PSI5NiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjMyIiB5PSI5NiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjQwIiB5PSI5NiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjQ4IiB5PSI5NiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjUyIiB5PSI5NiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjU2IiB5PSI5NiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjY0IiB5PSI5NiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijg0IiB5PSI5NiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjkyIiB5PSI5NiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijk2IiB5PSI5NiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEwMCIgeT0iOTYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMDQiIHk9Ijk2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTA4IiB5PSI5NiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjExMiIgeT0iOTYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjQiIHk9Ijk2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMjQiIHk9IjEwMCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjM2IiB5PSIxMDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0NCIgeT0iMTAwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNjQiIHk9IjEwMCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjY4IiB5PSIxMDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI4MCIgeT0iMTAwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iOTIiIHk9IjEwMCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijk2IiB5PSIxMDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMTIiIHk9IjEwMCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjExNiIgeT0iMTAwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTIwIiB5PSIxMDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjQiIHk9IjEwMCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEyOCIgeT0iMTAwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTYiIHk9IjEwNCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjIwIiB5PSIxMDQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyNCIgeT0iMTA0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMjgiIHk9IjEwNCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjMyIiB5PSIxMDQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIzNiIgeT0iMTA0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNDAiIHk9IjEwNCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjU2IiB5PSIxMDQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI2NCIgeT0iMTA0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iODQiIHk9IjEwNCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjkyIiB5PSIxMDQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI5NiIgeT0iMTA0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTA0IiB5PSIxMDQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMTIiIHk9IjEwNCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjExNiIgeT0iMTA0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTIwIiB5PSIxMDQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjQiIHk9IjEwNCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEyOCIgeT0iMTA0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTYiIHk9IjEwOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjQwIiB5PSIxMDgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI1NiIgeT0iMTA4IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNzYiIHk9IjEwOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijg0IiB5PSIxMDgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI5NiIgeT0iMTA4IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTEyIiB5PSIxMDgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjgiIHk9IjEwOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjE2IiB5PSIxMTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyNCIgeT0iMTEyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMjgiIHk9IjExMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjMyIiB5PSIxMTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0MCIgeT0iMTEyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNDgiIHk9IjExMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjUyIiB5PSIxMTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI1NiIgeT0iMTEyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNjQiIHk9IjExMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjcyIiB5PSIxMTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI3NiIgeT0iMTEyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iODAiIHk9IjExMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijg0IiB5PSIxMTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI5NiIgeT0iMTEyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTAwIiB5PSIxMTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMDQiIHk9IjExMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEwOCIgeT0iMTEyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTEyIiB5PSIxMTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjQiIHk9IjExMiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEyOCIgeT0iMTEyIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTYiIHk9IjExNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjI0IiB5PSIxMTYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyOCIgeT0iMTE2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMzIiIHk9IjExNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjQwIiB5PSIxMTYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI1MiIgeT0iMTE2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNjQiIHk9IjExNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjgwIiB5PSIxMTYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMTIiIHk9IjExNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEyMCIgeT0iMTE2IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTI0IiB5PSIxMTYiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjgiIHk9IjExNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjE2IiB5PSIxMjAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyNCIgeT0iMTIwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMjgiIHk9IjEyMCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjMyIiB5PSIxMjAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0MCIgeT0iMTIwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNDgiIHk9IjEyMCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjYwIiB5PSIxMjAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI2OCIgeT0iMTIwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iODAiIHk9IjEyMCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijg4IiB5PSIxMjAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI5NiIgeT0iMTIwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTAwIiB5PSIxMjAiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMTIiIHk9IjEyMCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEyOCIgeT0iMTIwIiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTYiIHk9IjEyNCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjQwIiB5PSIxMjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI1MiIgeT0iMTI0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNjQiIHk9IjEyNCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjY4IiB5PSIxMjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI3MiIgeT0iMTI0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iODQiIHk9IjEyNCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijg4IiB5PSIxMjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI5MiIgeT0iMTI0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iOTYiIHk9IjEyNCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjEwMCIgeT0iMTI0IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTEyIiB5PSIxMjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjQiIHk9IjEyNCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjE2IiB5PSIxMjgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIyMCIgeT0iMTI4IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMjQiIHk9IjEyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjI4IiB5PSIxMjgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIzMiIgeT0iMTI4IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMzYiIHk9IjEyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjQwIiB5PSIxMjgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI0OCIgeT0iMTI4IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNTIiIHk9IjEyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjY0IiB5PSIxMjgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI2OCIgeT0iMTI4IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iNzIiIHk9IjEyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjgwIiB5PSIxMjgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSI4NCIgeT0iMTI4IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iOTIiIHk9IjEyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9Ijk2IiB5PSIxMjgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMDgiIHk9IjEyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjExMiIgeT0iMTI4IiB3aWR0aD0iNCIgaGVpZ2h0PSI0Ii8+PHJlY3QgeD0iMTI0IiB5PSIxMjgiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiLz48cmVjdCB4PSIxMjgiIHk9IjEyOCIgd2lkdGg9IjQiIGhlaWdodD0iNCIvPjwvZz48L3N2Zz4=" alt="Lightning QR" width="118" height="118"></div>
-        <div class="don-addr"><span>hiddenranger445@minibits.cash</span><button class="cbtn" id="cbtn" onclick="doCopy(event)">Copy</button></div>
-        <div class="don-sub">Thank you! &#9889;</div>
+        <div class="don-addr"><span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bed6d7dadadbd0ccdfd0d9dbcc8a8a8bfed3d7d0d7dcd7cacd90dddfcdd6">[email&#160;protected]</a></span><button class="cbtn" id="cbtn" onclick="doCopy(event)">Copy</button></div>
+        <div class="don-sub">Lightning address &middot; Thank you! &#9889;</div>
       </div>
     </div>
   </div>
@@ -294,9 +291,9 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24
       <button class="mtab" onclick="switchTab('m',this)">Community</button>
     </div>
     <div class="mform active" id="fp">
-      <div class="fg"><label>Project Name *</label><input type="text" placeholder="e.g. Shopstr"></div>
-      <div class="fg"><label>Website URL *</label><input type="url" placeholder="https://..."></div>
-      <div class="fg"><label>Description * (max 120 chars)</label><input type="text" maxlength="120" placeholder="One-liner about the project"></div>
+      <div class="fg"><label>Project Name *</label><input type="text" id="p-name" placeholder="e.g. Shopstr"></div>
+      <div class="fg"><label>Website URL *</label><input type="url" id="p-url" placeholder="https://..."></div>
+      <div class="fg"><label>Description * (max 120 chars)</label><input type="text" id="p-desc" maxlength="120" placeholder="One-liner about the project"></div>
       <div class="frow2">
         <div class="fg"><label>Type *</label><select><option>P2P Marketplace</option><option>Digital Products</option><option>Exchange</option></select></div>
         <div class="fg"><label>Status *</label><select><option>Active</option><option>In Development</option><option>Experimental</option></select></div>
@@ -309,12 +306,12 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24
       <div class="fg"><label>Nostr npub</label><input type="text" placeholder="npub1..."></div>
       <div class="fg"><label>Twitter / X</label><input type="text" placeholder="@handle"></div>
       <div class="pledge"><label><input type="checkbox"> I confirm this listing does not involve illegal goods, weapons, drugs, or harmful content. I take full responsibility.</label></div>
-      <button class="fsub">Submit Project &#9889;</button>
+      <button class="fsub" onclick="submitProject()">Submit Project &#9889;</button>
     </div>
     <div class="mform" id="fc">
-      <div class="fg"><label>Name / Pseudonym *</label><input type="text" placeholder="Your name or alias"></div>
-      <div class="fg"><label>Nostr npub *</label><input type="text" placeholder="npub1..."></div>
-      <div class="fg"><label>Bio * (max 140 chars)</label><input type="text" maxlength="140" placeholder="What do you create and sell?"></div>
+      <div class="fg"><label>Name / Pseudonym *</label><input type="text" id="c-name" placeholder="Your name or alias"></div>
+      <div class="fg"><label>Nostr npub *</label><input type="text" id="c-npub" placeholder="npub1..."></div>
+      <div class="fg"><label>Bio * (max 140 chars)</label><input type="text" id="c-bio" maxlength="140" placeholder="What do you create and sell?"></div>
       <div class="frow2">
         <div class="fg"><label>Category *</label><select><option>Art</option><option>Music</option><option>Photography</option><option>Crafts</option><option>Digital</option><option>Writing</option></select></div>
         <div class="fg"><label>Profile Photo URL</label><input type="url" placeholder="https://..."></div>
@@ -323,23 +320,23 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24
       <div class="fg"><label>Platforms</label><input type="text" placeholder="e.g. Primal, Shopstr, Damus"></div>
       <div class="fg"><label>Twitter / X</label><input type="text" placeholder="@handle"></div>
       <div class="pledge"><label><input type="checkbox"> I confirm my listings will not involve illegal goods, weapons, drugs, or harmful content. I take full responsibility.</label></div>
-      <button class="fsub">Submit Creator &#9889;</button>
+      <button class="fsub" onclick="submitCreator()">Submit Creator &#9889;</button>
     </div>
     <div class="mform" id="fm">
-      <div class="fg"><label>Community Name *</label><input type="text" placeholder="e.g. Bitcoin Praha"></div>
-      <div class="fg"><label>Nostr npub *</label><input type="text" placeholder="npub1..."></div>
+      <div class="fg"><label>Community Name *</label><input type="text" id="m-name" placeholder="e.g. Bitcoin Praha"></div>
+      <div class="fg"><label>Nostr npub *</label><input type="text" id="m-npub" placeholder="npub1..."></div>
       <div class="frow2">
-        <div class="fg"><label>City *</label><input type="text" placeholder="e.g. Praha"></div>
-        <div class="fg"><label>Country *</label><input type="text" placeholder="e.g. Czech Republic"></div>
+        <div class="fg"><label>City *</label><input type="text" id="m-city" placeholder="e.g. Praha"></div>
+        <div class="fg"><label>Country *</label><input type="text" id="m-country" placeholder="e.g. Czech Republic"></div>
       </div>
-      <div class="fg"><label>Description *</label><input type="text" maxlength="140" placeholder="What is your community about?"></div>
+      <div class="fg"><label>Description *</label><input type="text" id="m-desc" maxlength="140" placeholder="What is your community about?"></div>
       <div class="frow2">
         <div class="fg"><label>Region</label><select><option value="cz">Czech</option><option value="sk">Slovak</option><option value="eu">Europe</option><option value="global">Global</option></select></div>
         <div class="fg"><label>Meetup Frequency</label><select><option>Monthly</option><option>Weekly</option><option>Bi-monthly</option><option>Quarterly</option><option>Online only</option></select></div>
       </div>
       <div class="fg"><label>Website</label><input type="url" placeholder="https://..."></div>
       <div class="pledge"><label><input type="checkbox"> I confirm this is a genuine Bitcoin/Nostr community and not spam or commercial promotion.</label></div>
-      <button class="fsub">Submit Community &#9889;</button>
+      <button class="fsub" onclick="submitCommunity()">Submit Community &#9889;</button>
     </div>
   </div>
 </div>
@@ -624,7 +621,325 @@ function doCopy(e){
   });
 }
 
-render();
+
+// ── SUPABASE CONFIG ───────────────────────────────────────────────────────────
+var SB_URL = 'https://znxdarfdmnpxemsygpba.supabase.co';
+var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpueGRhcmZkbW5weGVtc3lncGJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1MjY1MDYsImV4cCI6MjA4ODEwMjUwNn0.RRnuG5WRIfgxEffm6zRqOCTDAinW6YXGZvHRVqWLCQU';
+
+function sbFetch(table, data) {
+  return fetch(SB_URL + '/rest/v1/' + table, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SB_KEY,
+      'Authorization': 'Bearer ' + SB_KEY,
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify(data)
+  });
+}
+
+function getVal(id) {
+  var el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function showMsg(txt, ok) {
+  var msg = document.createElement('div');
+  msg.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:' + (ok ? '#2ecc71' : '#e74c3c') + ';color:#000;padding:12px 24px;border-radius:10px;font-family:Space Mono,monospace;font-size:13px;z-index:999;font-weight:700;';
+  msg.textContent = txt;
+  document.body.appendChild(msg);
+  setTimeout(function(){msg.remove();}, 4000);
+}
+
+function submitProject() {
+  var name = getVal('p-name'), url = getVal('p-url'), desc = getVal('p-desc'), npub = getVal('p-npub');
+  var pledge = document.querySelector('#fp input[type="checkbox"]');
+  if (!name || !url || !desc) { showMsg('Please fill in all required fields.', false); return; }
+  if (pledge && !pledge.checked) { showMsg('Please confirm the pledge.', false); return; }
+  var btn = document.querySelector('#fp .fsub');
+  btn.textContent = 'Submitting...'; btn.disabled = true;
+  sbFetch('listings', {type:'project',name:name,url:url,description:desc,npub:npub||null,data:{}})
+  .then(function(r){
+    if(r.ok){showMsg('Project submitted! ⚡ Thank you.',true);closeModal();}
+    else r.text().then(function(t){showMsg('Error: '+t,false);});
+  }).catch(function(){showMsg('Network error.',false);})
+  .finally(function(){btn.textContent='Submit Project ⚡';btn.disabled=false;});
+}
+
+function submitCreator() {
+  var name = getVal('c-name'), npub = getVal('c-npub'), bio = getVal('c-bio');
+  var pledge = document.querySelector('#fc input[type="checkbox"]');
+  if (!name || !npub || !bio) { showMsg('Please fill in all required fields.', false); return; }
+  if (pledge && !pledge.checked) { showMsg('Please confirm the pledge.', false); return; }
+  var btn = document.querySelector('#fc .fsub');
+  btn.textContent = 'Submitting...'; btn.disabled = true;
+  sbFetch('listings', {type:'creator',name:name,npub:npub,description:bio,data:{}})
+  .then(function(r){
+    if(r.ok){showMsg('Creator submitted! ⚡ Thank you.',true);closeModal();}
+    else r.text().then(function(t){showMsg('Error: '+t,false);});
+  }).catch(function(){showMsg('Network error.',false);})
+  .finally(function(){btn.textContent='Submit Creator ⚡';btn.disabled=false;});
+}
+
+function submitCommunity() {
+  var name = getVal('m-name'), npub = getVal('m-npub'), city = getVal('m-city');
+  var country = getVal('m-country'), desc = getVal('m-desc');
+  var pledge = document.querySelector('#fm input[type="checkbox"]');
+  if (!name || !city || !country || !desc) { showMsg('Please fill in all required fields.', false); return; }
+  if (pledge && !pledge.checked) { showMsg('Please confirm the pledge.', false); return; }
+  var btn = document.querySelector('#fm .fsub');
+  btn.textContent = 'Submitting...'; btn.disabled = true;
+  sbFetch('listings', {type:'community',name:name,npub:npub||null,description:desc,data:{city:city,country:country}})
+  .then(function(r){
+    if(r.ok){showMsg('Community submitted! ⚡ Thank you.',true);closeModal();}
+    else r.text().then(function(t){showMsg('Error: '+t,false);});
+  }).catch(function(){showMsg('Network error.',false);})
+  .finally(function(){btn.textContent='Submit Community ⚡';btn.disabled=false;});
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ── NAČÍTÁNÍ DAT ZE SUPABASE ─────────────────────────────────────────────────
+function loadFromSupabase() {
+  fetch('https://znxdarfdmnpxemsygpba.supabase.co/rest/v1/listings?status=eq.active&order=submitted_at.desc', {
+    headers: {
+      'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpueGRhcmZkbW5weGVtc3lncGJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1MjY1MDYsImV4cCI6MjA4ODEwMjUwNn0.RRnuG5WRIfgxEffm6zRqOCTDAinW6YXGZvHRVqWLCQU',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpueGRhcmZkbW5weGVtc3lncGJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1MjY1MDYsImV4cCI6MjA4ODEwMjUwNn0.RRnuG5WRIfgxEffm6zRqOCTDAinW6YXGZvHRVqWLCQU'
+    }
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(rows) {
+    if (!rows || !rows.length) return;
+    
+    rows.forEach(function(row) {
+      // Nastav unikátní id (záporné aby nekolidovalo se statickými)
+      var item = {
+        id: -row.id,
+        name: row.name,
+        npub: row.npub || '',
+        url: row.url || '#',
+        desc: row.description,
+        f: row.tier === 'featured',
+        v: row.tier === 'verified' || row.tier === 'featured',
+        e: '🆕',
+        sb: true  // příznak že jde o Supabase záznam
+      };
+      
+      if (row.type === 'project') {
+        item.type = 'marketplace';
+        item.tl = 'Marketplace';
+        item.pay = ['lightning'];
+        item.av = [];
+        item.st = 'active';
+        item.rat = 0;
+        item.act = 'New';
+        item.exp = null;
+        item.oss = false;
+        item.gh = null;
+        item.tw = null;
+        projects.push(item);
+      } else if (row.type === 'creator') {
+        item.bio = row.description;
+        item.handle = row.npub ? row.npub.slice(0,12)+'...' : 'nostr';
+        item.cat = 'other';
+        item.cl = 'Creator';
+        item.sells = [];
+        item.plat = ['Nostr'];
+        item.rat = 0;
+        item.exp = null;
+        item.tw = null;
+        creators.push(item);
+      } else if (row.type === 'community') {
+        item.flag = '🌍';
+        item.city = row.data && row.data.city ? row.data.city : 'Unknown';
+        item.country = row.data && row.data.country ? row.data.country : '';
+        item.reg = 'global';
+        item.members = 'New';
+        item.freq = 'TBD';
+        communities.push(item);
+      }
+    });
+    
+    // Aktualizuj počítadla v přepínači
+    document.getElementById('bp').querySelector('.mcnt').textContent = projects.length;
+    document.getElementById('bc').querySelector('.mcnt').textContent = creators.length;
+    document.getElementById('bm').querySelector('.mcnt').textContent = communities.length;
+    
+    render();
+  })
+  .catch(function(err) {
+    console.log('Supabase load error:', err);
+  });
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
+
+// ── NAČÍTÁNÍ DAT ZE SUPABASE ─────────────────────────────────────────────────
+function loadFromSupabase() {
+  fetch(SB_URL + '/rest/v1/listings?status=eq.active&order=submitted_at.desc', {
+    headers: {
+      'apikey': SB_KEY,
+      'Authorization': 'Bearer ' + SB_KEY
+    }
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(rows){
+    rows.forEach(function(row){
+      if(row.type === 'project') {
+        // Přidej jen pokud ještě není v seznamu
+        var exists = projects.find(function(p){ return p.name === row.name; });
+        if(!exists) {
+          projects.push({
+            id: 1000 + row.id,
+            name: row.name,
+            desc: row.description,
+            url: row.url || '#',
+            npub: row.npub || '',
+            e: '🛒',
+            type: 'marketplace',
+            tl: 'Marketplace',
+            pay: ['lightning'],
+            av: [],
+            rat: 0,
+            st: 'active',
+            act: 'New',
+            exp: null,
+            oss: false,
+            f: row.tier === 'featured',
+            v: row.tier === 'verified' || row.tier === 'featured',
+            gh: null, tw: null,
+            _db: true
+          });
+        }
+      } else if(row.type === 'creator') {
+        var exists = creators.find(function(c){ return c.name === row.name; });
+        if(!exists) {
+          creators.push({
+            id: 1000 + row.id,
+            name: row.name,
+            handle: row.npub ? row.npub.substring(0,12)+'...' : 'nostr',
+            bio: row.description,
+            e: '🎨',
+            cat: 'other',
+            cl: 'Creator',
+            sells: ['Custom'],
+            plat: ['Nostr'],
+            rat: 0,
+            exp: null,
+            f: row.tier === 'featured',
+            v: row.tier === 'verified' || row.tier === 'featured',
+            tw: null,
+            npub: row.npub || '',
+            _db: true
+          });
+        }
+      } else if(row.type === 'community') {
+        var exists = communities.find(function(m){ return m.name === row.name; });
+        if(!exists) {
+          var d = row.data || {};
+          communities.push({
+            id: 1000 + row.id,
+            name: row.name,
+            flag: '🌍',
+            reg: 'global',
+            city: d.city || 'Unknown',
+            country: d.country || '',
+            desc: row.description,
+            url: row.url || '#',
+            npub: row.npub || '',
+            members: 'New',
+            freq: 'TBD',
+            f: row.tier === 'featured',
+            v: row.tier === 'verified' || row.tier === 'featured',
+            _db: true
+          });
+        }
+      }
+    });
+    // Aktualizuj počty v přepínači
+    document.getElementById('bp').querySelector('.mcnt').textContent = projects.length;
+    document.getElementById('bc').querySelector('.mcnt').textContent = creators.length;
+    document.getElementById('bm').querySelector('.mcnt').textContent = communities.length;
+    render();
+  })
+  .catch(function(e){ console.log('Supabase load error:', e); });
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
+
+// SUPABASE LOAD
+function loadFromSupabase(){
+  fetch('https://znxdarfdmnpxemsygpba.supabase.co/rest/v1/listings?status=eq.active&order=submitted_at.desc',{
+    headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpueGRhcmZkbW5weGVtc3lncGJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1MjY1MDYsImV4cCI6MjA4ODEwMjUwNn0.RRnuG5WRIfgxEffm6zRqOCTDAinW6YXGZvHRVqWLCQU','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpueGRhcmZkbW5weGVtc3lncGJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1MjY1MDYsImV4cCI6MjA4ODEwMjUwNn0.RRnuG5WRIfgxEffm6zRqOCTDAinW6YXGZvHRVqWLCQU'}
+  }).then(function(r){return r.json();})
+  .then(function(rows){
+    var nid=1000;
+    rows.forEach(function(row){
+      var it={id:nid++,name:row.name,desc:row.description,npub:row.npub||'',url:row.url||'',e:'⚡',fromDB:true,
+        st:row.tier==='featured'?'featured':row.tier==='verified'?'verified':'active',
+        verified:row.tier==='verified'||row.tier==='featured',featured:row.tier==='featured'};
+      if(row.type==='project'){
+        it.type=(row.data&&row.data.type)?row.data.type:'other';it.tl=it.type;it.ln='';
+        projects.push(it);
+      }else if(row.type==='creator'){
+        it.handle=row.npub?row.npub.substring(0,12)+'...':'';it.tags=[];
+        creators.push(it);
+      }else if(row.type==='community'){
+        it.flag='🌍';it.reg='other';
+        it.city=(row.data&&row.data.city)?row.data.city:'';
+        it.country=(row.data&&row.data.country)?row.data.country:'';
+        it.members='?';communities.push(it);
+      }
+    });
+    render();
+  }).catch(function(){
+// -- NACITANI DAT ZE SUPABASE
+function loadFromSupabase() {
+  fetch('https://znxdarfdmnpxemsygpba.supabase.co/rest/v1/listings?status=eq.active&order=submitted_at.desc', {
+    headers: {
+      'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpueGRhcmZkbW5weGVtc3lncGJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1MjY1MDYsImV4cCI6MjA4ODEwMjUwNn0.RRnuG5WRIfgxEffm6zRqOCTDAinW6YXGZvHRVqWLCQU',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpueGRhcmZkbW5weGVtc3lncGJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1MjY1MDYsImV4cCI6MjA4ODEwMjUwNn0.RRnuG5WRIfgxEffm6zRqOCTDAinW6YXGZvHRVqWLCQU'
+    }
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(rows) {
+    var nextId = 1000;
+    rows.forEach(function(row) {
+      var item = {
+        id: nextId++, name: row.name, desc: row.description,
+        npub: row.npub || '', url: row.url || '',
+        st: row.tier==='featured' ? 'featured' : (row.tier==='verified' ? 'verified' : 'active'),
+        verified: row.tier==='verified' || row.tier==='featured',
+        featured: row.tier==='featured',
+        e: String.fromCodePoint(0x26A1), fromDB: true
+      };
+      if (row.type === 'project') {
+        item.type = (row.data && row.data.type) ? row.data.type : 'other';
+        item.tl = item.type; item.ln = '';
+        projects.push(item);
+      } else if (row.type === 'creator') {
+        item.handle = row.npub ? row.npub.substring(0,12)+'...' : '';
+        item.tags = [];
+        creators.push(item);
+      } else if (row.type === 'community') {
+        item.flag = String.fromCodePoint(0x1F30D);
+        item.reg = 'other';
+        item.city = (row.data && row.data.city) ? row.data.city : '';
+        item.country = (row.data && row.data.country) ? row.data.country : '';
+        item.members = '?';
+        communities.push(item);
+      }
+    });
+    render();
+  })
+  .catch(function() { render(); });
+}
+
+loadFromSupabase();
+});
+}
+loadFromSupabase();
+
 
 /* ============================================================
    PHASE 3 - NOSTR AVATAR LOADER
