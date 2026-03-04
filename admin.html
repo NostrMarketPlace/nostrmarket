@@ -217,7 +217,13 @@ function sbGet(endpoint){
 function sbPatch(table,id,data){
   return fetch(SB_URL+"/rest/v1/"+table+"?id=eq."+id,{
     method:"PATCH",
-    headers:{"Content-Type":"application/json","apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY,"Prefer":"return=minimal"},
+    headers:{
+      "Content-Type":"application/json",
+      "apikey":SB_KEY,
+      "Authorization":"Bearer "+SB_KEY,
+      "Prefer":"return=representation",
+      "Accept":"application/json"
+    },
     body:JSON.stringify(data)
   });
 }
@@ -225,7 +231,7 @@ function sbPatch(table,id,data){
 // LOAD
 function loadAll(){
   if(!sessionStorage.getItem("admin")) return;
-  sbGet("listings?order=submitted_at.desc&limit=200").then(function(rows){
+  sbGet("listings?order=submitted_at.desc&limit=200&select=*").then(function(rows){
     allListings=rows||[];
     updateStats();
     renderListings(currentFilter);
