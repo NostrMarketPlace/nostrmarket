@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin – Nostr Market Directory</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--border:#2a2a2a;--accent:#f5a623;--text:#e8e8e8;--muted:#666;--card:#141414;--red:#e74c3c;--green:#2ecc71;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(245,166,35,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(245,166,35,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+
+/* LOGIN */
+.login-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:100;background:var(--bg);}
+.login-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px;width:360px;text-align:center;}
+.login-box h1{font-size:22px;font-weight:800;margin-bottom:6px;}
+.login-box p{font-size:13px;color:var(--muted);margin-bottom:28px;}
+.login-box input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px 14px;color:var(--text);font-family:'Space Mono',monospace;font-size:14px;margin-bottom:12px;outline:none;}
+.login-box input:focus{border-color:var(--accent);}
+.login-box button{width:100%;background:var(--accent);color:#000;border:none;padding:12px;border-radius:8px;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;cursor:pointer;}
+.login-err{color:var(--red);font-size:12px;font-family:'Space Mono',monospace;margin-top:8px;display:none;}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:10;border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:64px;background:rgba(10,10,10,0.95);backdrop-filter:blur(10px);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-icon{width:32px;height:32px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.logo-text{font-size:16px;font-weight:800;color:var(--text);}
+.logo-text span{color:var(--accent);}
+.hdr-right{display:flex;align-items:center;gap:16px;}
+.hdr-tag{font-size:11px;font-family:'Space Mono',monospace;color:var(--accent);background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.3);border-radius:6px;padding:4px 10px;}
+.logout-btn{background:none;border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:6px;font-family:'Space Mono',monospace;font-size:11px;cursor:pointer;}
+.logout-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* LAYOUT */
+.wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:32px 24px 80px;}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px;}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+.stat-num{font-size:28px;font-weight:800;color:var(--accent);}
+.stat-lbl{font-size:11px;font-family:'Space Mono',monospace;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:1px;}
+
+/* TABS */
+.tabs{display:flex;gap:4px;background:var(--bg3);border-radius:9px;padding:3px;margin-bottom:24px;width:fit-content;}
+.tab{padding:8px 20px;border:none;background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-weight:700;font-size:13px;cursor:pointer;border-radius:7px;transition:all .15s;}
+.tab.active{background:var(--bg);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.4);}
+
+/* TABLE */
+.tbl-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.tbl-hdr{display:grid;padding:12px 16px;border-bottom:1px solid var(--border);font-size:10px;font-family:'Space Mono',monospace;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
+.tbl-hdr.listings-hdr{grid-template-columns:2fr 1fr 1fr 1fr 1fr 140px;}
+.tbl-hdr.reports-hdr{grid-template-columns:2fr 1fr 1fr 120px;}
+.tbl-row{display:grid;padding:14px 16px;border-bottom:1px solid var(--border);align-items:center;transition:background .15s;}
+.tbl-row:last-child{border-bottom:none;}
+.tbl-row:hover{background:rgba(255,255,255,.03);}
+.tbl-row.listings-row{grid-template-columns:2fr 1fr 1fr 1fr 1fr 140px;}
+.tbl-row.reports-row{grid-template-columns:2fr 1fr 1fr 120px;}
+.tbl-name{font-size:14px;font-weight:700;}
+.tbl-name a{color:var(--accent);text-decoration:none;font-size:11px;font-family:'Space Mono',monospace;margin-left:8px;}
+.tbl-sub{font-size:11px;color:var(--muted);margin-top:2px;font-family:'Space Mono',monospace;}
+.tbl-cell{font-size:12px;color:var(--muted);}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-family:'Space Mono',monospace;font-weight:700;}
+.badge-project{background:rgba(52,152,219,.15);color:#3498db;}
+.badge-creator{background:rgba(155,89,182,.15);color:#9b59b6;}
+.badge-community{background:rgba(46,204,113,.15);color:#2ecc71;}
+.badge-free{background:rgba(102,102,102,.15);color:var(--muted);}
+.badge-verified{background:rgba(127,179,211,.15);color:#7fb3d3;}
+.badge-featured{background:rgba(201,146,42,.15);color:#c9922a;}
+.badge-active{background:rgba(46,204,113,.15);color:#2ecc71;}
+.badge-removed{background:rgba(231,76,60,.15);color:var(--red);}
+.actions{display:flex;gap:6px;}
+.act-btn{border:none;border-radius:5px;padding:5px 10px;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;cursor:pointer;transition:opacity .2s;}
+.act-btn:hover{opacity:.8;}
+.btn-verify{background:rgba(127,179,211,.2);color:#7fb3d3;}
+.btn-feature{background:rgba(201,146,42,.2);color:#c9922a;}
+.btn-remove{background:rgba(231,76,60,.2);color:var(--red);}
+.btn-restore{background:rgba(46,204,113,.2);color:var(--green);}
+.btn-resolve{background:rgba(46,204,113,.2);color:var(--green);}
+.empty{text-align:center;padding:48px;color:var(--muted);font-size:14px;}
+.loading{text-align:center;padding:48px;color:var(--muted);font-family:'Space Mono',monospace;font-size:13px;}
+
+/* FILTER */
+.filters{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.filt{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:6px 14px;font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;transition:all .15s;}
+.filt.active,.filt:hover{border-color:var(--accent);color:var(--accent);}
+
+@media(max-width:768px){
+  .stats{grid-template-columns:1fr 1fr;}
+  header{padding:0 16px;}
+  .wrap{padding:20px 12px 60px;}
+  .tbl-hdr.listings-hdr,.tbl-row.listings-row{grid-template-columns:2fr 1fr 120px;}
+  .tbl-hdr.listings-hdr span:nth-child(2),.tbl-row.listings-row .tbl-cell:nth-child(2),
+  .tbl-hdr.listings-hdr span:nth-child(4),.tbl-row.listings-row .tbl-cell:nth-child(4),
+  .tbl-hdr.listings-hdr span:nth-child(5),.tbl-row.listings-row .tbl-cell:nth-child(5){display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div style="font-size:32px;margin-bottom:12px;">⚡</div>
+    <h1>Admin Panel</h1>
+    <p>Nostr Market Directory</p>
+    <input type="password" id="pwInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button onclick="doLogin()">Login</button>
+    <div class="login-err" id="loginErr">Wrong password. Try again.</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="mainWrap" style="display:none;">
+<header>
+  <a class="logo" href="index.html">
+    <div class="logo-icon">⚡</div>
+    <div class="logo-text">Nostr<span>Market</span></div>
+  </a>
+  <div class="hdr-right">
+    <div class="hdr-tag">ADMIN</div>
+    <button class="logout-btn" onclick="doLogout()">Logout</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="s-total">–</div><div class="stat-lbl">Total listings</div></div>
+    <div class="stat"><div class="stat-num" id="s-new">–</div><div class="stat-lbl">This week</div></div>
+    <div class="stat"><div class="stat-num" id="s-reports">–</div><div class="stat-lbl">Open reports</div></div>
+    <div class="stat"><div class="stat-num" id="s-featured">–</div><div class="stat-lbl">Featured</div></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('listings',this)">Listings</button>
+    <button class="tab" onclick="switchTab('reports',this)">Reports</button>
+  </div>
+
+  <!-- LISTINGS -->
+  <div id="tab-listings">
+    <div class="filters" id="listing-filters">
+      <div class="filt active" onclick="filterListings('all',this)">All</div>
+      <div class="filt" onclick="filterListings('project',this)">Projects</div>
+      <div class="filt" onclick="filterListings('creator',this)">Creators</div>
+      <div class="filt" onclick="filterListings('community',this)">Communities</div>
+      <div class="filt" onclick="filterListings('removed',this)">Removed</div>
+    </div>
+    <div class="tbl-wrap">
+      <div class="tbl-hdr listings-hdr">
+        <span>Name</span><span>Type</span><span>Tier</span><span>Status</span><span>Submitted</span><span>Actions</span>
+      </div>
+      <div id="listings-body"><div class="loading">Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- REPORTS -->
+  <div id="tab-reports" style="display:none;">
+    <div class="tbl-wrap">
+      <div class="tbl-hdr reports-hdr">
+        <span>Listing</span><span>Reason</span><span>Date</span><span>Actions</span>
+      </div>
+      <div id="reports-body"><div class="loading">Loading...</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+var SB_URL="https://znxdarfdmnpxemsygpba.supabase.co";
+var SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpueGRhcmZkbW5weGVtc3lncGJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1MjY1MDYsImV4cCI6MjA4ODEwMjUwNn0.RRnuG5WRIfgxEffm6zRqOCTDAinW6YXGZvHRVqWLCQU";
+var ADMIN_PW="nostrmarket2024";
+var allListings=[];
+var currentFilter="all";
+
+// LOGIN
+function doLogin(){
+  var pw=document.getElementById("pwInput").value;
+  if(pw===ADMIN_PW){
+    sessionStorage.setItem("admin","1");
+    document.getElementById("loginWrap").style.display="none";
+    document.getElementById("mainWrap").style.display="block";
+    loadAll();
+  } else {
+    document.getElementById("loginErr").style.display="block";
+    document.getElementById("pwInput").value="";
+  }
+}
+
+function doLogout(){
+  sessionStorage.removeItem("admin");
+  location.reload();
+}
+
+// Auto-login if session exists
+if(sessionStorage.getItem("admin")==="1"){
+  document.getElementById("loginWrap").style.display="none";
+  document.getElementById("mainWrap").style.display="block";
+}
+
+// TABS
+function switchTab(name,el){
+  document.querySelectorAll(".tab").forEach(function(t){t.classList.remove("active");});
+  el.classList.add("active");
+  document.getElementById("tab-listings").style.display=name==="listings"?"block":"none";
+  document.getElementById("tab-reports").style.display=name==="reports"?"block":"none";
+}
+
+// API
+function sbGet(endpoint){
+  return fetch(SB_URL+"/rest/v1/"+endpoint,{
+    headers:{"apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY}
+  }).then(function(r){return r.json();});
+}
+
+function sbPatch(table,id,data){
+  return fetch(SB_URL+"/rest/v1/"+table+"?id=eq."+id,{
+    method:"PATCH",
+    headers:{"Content-Type":"application/json","apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY,"Prefer":"return=minimal"},
+    body:JSON.stringify(data)
+  });
+}
+
+// LOAD
+function loadAll(){
+  if(!sessionStorage.getItem("admin")) return;
+  sbGet("listings?order=submitted_at.desc&limit=200").then(function(rows){
+    allListings=rows||[];
+    updateStats();
+    renderListings(currentFilter);
+  });
+  sbGet("reports?resolved=eq.false&order=reported_at.desc").then(function(rows){
+    renderReports(rows||[]);
+    document.getElementById("s-reports").textContent=(rows||[]).length;
+  });
+}
+
+function updateStats(){
+  document.getElementById("s-total").textContent=allListings.filter(function(r){return r.status!=="removed";}).length;
+  var week=new Date(Date.now()-7*24*60*60*1000).toISOString();
+  document.getElementById("s-new").textContent=allListings.filter(function(r){return r.submitted_at>week;}).length;
+  document.getElementById("s-featured").textContent=allListings.filter(function(r){return r.tier==="featured";}).length;
+}
+
+// FILTER
+function filterListings(f,el){
+  currentFilter=f;
+  document.querySelectorAll("#listing-filters .filt").forEach(function(x){x.classList.remove("active");});
+  el.classList.add("active");
+  renderListings(f);
+}
+
+function renderListings(filter){
+  var rows=allListings.filter(function(r){
+    if(filter==="removed") return r.status==="removed";
+    if(filter==="all") return r.status!=="removed";
+    return r.type===filter && r.status!=="removed";
+  });
+  var body=document.getElementById("listings-body");
+  if(!rows.length){body.innerHTML='<div class="empty">No listings found.</div>';return;}
+  body.innerHTML=rows.map(function(r){
+    var date=r.submitted_at?r.submitted_at.substring(0,10):"–";
+    var link=r.url?'<a href="'+r.url+'" target="_blank">↗</a>':"";
+    var actions="";
+    if(r.status!=="removed"){
+      if(r.tier==="free") actions+='<button class="act-btn btn-verify" onclick="setTier('+r.id+',\'verified\')">Verify</button>';
+      if(r.tier!=="featured") actions+='<button class="act-btn btn-feature" onclick="setTier('+r.id+',\'featured\')">Feature</button>';
+      actions+='<button class="act-btn btn-remove" onclick="removeListing('+r.id+')">Remove</button>';
+    } else {
+      actions+='<button class="act-btn btn-restore" onclick="restoreListing('+r.id+')">Restore</button>';
+    }
+    return '<div class="tbl-row listings-row">'
+      +'<div><div class="tbl-name">'+escHtml(r.name)+link+'</div><div class="tbl-sub">'+escHtml(r.description||"").substring(0,60)+'...</div></div>'
+      +'<div class="tbl-cell"><span class="badge badge-'+r.type+'">'+r.type+'</span></div>'
+      +'<div class="tbl-cell"><span class="badge badge-'+r.tier+'">'+r.tier+'</span></div>'
+      +'<div class="tbl-cell"><span class="badge badge-'+r.status+'">'+r.status+'</span></div>'
+      +'<div class="tbl-cell">'+date+'</div>'
+      +'<div class="actions">'+actions+'</div>'
+      +'</div>';
+  }).join("");
+}
+
+function renderReports(rows){
+  var body=document.getElementById("reports-body");
+  if(!rows.length){body.innerHTML='<div class="empty">No open reports.</div>';return;}
+  body.innerHTML=rows.map(function(r){
+    var date=r.reported_at?r.reported_at.substring(0,10):"–";
+    var listing=allListings.find(function(l){return l.id===r.listing_id;});
+    var name=listing?escHtml(listing.name):"(unknown – id "+r.listing_id+")";
+    return '<div class="tbl-row reports-row">'
+      +'<div class="tbl-name">'+name+'</div>'
+      +'<div class="tbl-cell">'+escHtml(r.reason||"–")+'</div>'
+      +'<div class="tbl-cell">'+date+'</div>'
+      +'<div class="actions"><button class="act-btn btn-resolve" onclick="resolveReport('+r.id+')">Resolve</button>'
+      +(listing?'<button class="act-btn btn-remove" onclick="removeListing('+r.listing_id+')">Remove listing</button>':"")
+      +'</div></div>';
+  }).join("");
+}
+
+// ACTIONS
+function setTier(id,tier){
+  sbPatch("listings",id,{tier:tier}).then(function(){
+    allListings.forEach(function(r){if(r.id===id)r.tier=tier;});
+    updateStats();
+    renderListings(currentFilter);
+    showToast("Tier updated to "+tier);
+  });
+}
+
+function removeListing(id){
+  if(!confirm("Remove this listing?")) return;
+  sbPatch("listings",id,{status:"removed"}).then(function(){
+    allListings.forEach(function(r){if(r.id===id)r.status="removed";});
+    updateStats();
+    renderListings(currentFilter);
+    showToast("Listing removed");
+  });
+}
+
+function restoreListing(id){
+  sbPatch("listings",id,{status:"active"}).then(function(){
+    allListings.forEach(function(r){if(r.id===id)r.status="active";});
+    updateStats();
+    renderListings(currentFilter);
+    showToast("Listing restored");
+  });
+}
+
+function resolveReport(id){
+  sbPatch("reports",id,{resolved:true}).then(function(){loadAll();showToast("Report resolved");});
+}
+
+function showToast(txt){
+  var m=document.createElement("div");
+  m.style.cssText="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2ecc71;color:#000;padding:10px 22px;border-radius:8px;font-family:Space Mono,monospace;font-size:12px;z-index:9999;font-weight:700;";
+  m.textContent=txt;
+  document.body.appendChild(m);
+  setTimeout(function(){m.remove();},3000);
+}
+
+function escHtml(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+// Init
+if(sessionStorage.getItem("admin")==="1") loadAll();
+</script>
+</body>
+</html>
