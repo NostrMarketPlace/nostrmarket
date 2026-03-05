@@ -60,6 +60,14 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24
 .ftr-l{font-size:13px;color:var(--muted);font-family:'Space Mono',monospace;}
 .ftr-l a{color:var(--accent);text-decoration:none;}
 @media(max-width:680px){header{padding:0 18px;}.wrap{padding:40px 18px 80px;}.values{grid-template-columns:1fr;}footer{padding:18px;}}
+
+.qr-tabs{display:flex;gap:8px;justify-content:center;margin:20px 0 0;}
+.qr-tab{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 18px;font-size:13px;font-family:'Space Mono',monospace;color:var(--muted);cursor:pointer;transition:all .2s;}
+.qr-tab.active{background:rgba(245,166,35,.1);border-color:var(--accent);color:var(--accent);}
+.qr-tab:hover{color:var(--text);}
+.qr-panel{text-align:center;}
+.qr-addr{font-family:'Space Mono',monospace;font-size:13px;color:var(--accent);background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 16px;display:inline-block;cursor:pointer;transition:border-color .2s;margin-top:4px;}
+.qr-addr:hover{border-color:var(--accent);}
 </style>
 </head>
 <body>
@@ -131,18 +139,46 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" id="support">
     <h2>Support the project</h2>
     <div class="support-box">
       <h3>Keep the directory running</h3>
       <p>Not a company. Not VC-funded. Donations via Lightning keep the lights on.</p>
-      <div class="support-links">
-        <a class="slink" href="lightning:hiddenranger445@minibits.cash">&#9889; <span class="__cf_email__" data-cfemail="96fefff2f2f3f8e4f7f8f1f3e4a2a2a3d6fbfff8fff4ffe2e5b8f5f7e5fe">[email&#160;protected]</span></a>
-        <a class="slink" href="https://primal.net/p/npub1a2049m2l73ylehvz3kw6uspr7tuld6r2csqqqce8l2seqjnjy8xszr6a8g" target="_blank">&#128995; Nostr profile</a>
+
+      <div class="qr-tabs">
+        <button class="qr-tab active" onclick="switchTab(this,'ln')">&#9889; Lightning address</button>
+        <button class="qr-tab" onclick="switchTab(this,'nostr')">&#128312; Nostr public key</button>
+      </div>
+
+      <div id="tab-ln" class="qr-panel">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=lightning:hiddenranger445@minibits.cash&bgcolor=ffffff&color=000000&margin=10" width="200" height="200" style="border-radius:12px;margin:16px auto;display:block;" alt="Lightning QR">
+        <div class="qr-addr" onclick="navigator.clipboard.writeText('hiddenranger445@minibits.cash');this.textContent='&#10003; Copied!';setTimeout(function(){this.textContent='&#9889; hiddenranger445@minibits.cash';}.bind(this),2000);">&#9889; hiddenranger445&#64;minibits.cash</div>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px;">Tap to copy &middot; scan to pay</p>
+      </div>
+
+      <div id="tab-nostr" class="qr-panel" style="display:none;">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=nostr:npub1a2049m2l73ylehvz3kw6uspr7tuld6r2csqqqce8l2seqjnjy8xszr6a8g&bgcolor=ffffff&color=000000&margin=10" width="200" height="200" style="border-radius:12px;margin:16px auto;display:block;" alt="Nostr QR">
+        <div class="qr-addr" onclick="navigator.clipboard.writeText('npub1a2049m2l73ylehvz3kw6uspr7tuld6r2csqqqce8l2seqjnjy8xszr6a8g');this.textContent='&#10003; Copied!';setTimeout(function(){this.textContent='npub1a2049m2l73...';}.bind(this),2000);">npub1a2049m2l73...</div>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px;">Tap to copy &middot; follow on Nostr</p>
+      </div>
+
+      <div class="support-links" style="margin-top:20px;">
+        <a class="slink" href="https://primal.net/p/npub1a2049m2l73ylehvz3kw6uspr7tuld6r2csqqqce8l2seqjnjy8xszr6a8g" target="_blank">&#128995; Open Nostr profile</a>
       </div>
     </div>
   </div>
 </div>
 
 <footer>
-  <div class="ftr-l">Built for the <a href="https://nostr.com" target="_blank">Nostr</a> community &middot; <a href="index
+  <div class="ftr-l">Built for the <a href="https://nostr.com" target="_blank">Nostr</a> community &middot; <a href="index.html">Directory</a> &middot; <a href="pricing.html">Pricing</a></div>
+</footer>
+<script>
+function switchTab(btn,tab){
+  document.querySelectorAll('.qr-tab').forEach(function(b){b.classList.remove('active');});
+  document.querySelectorAll('.qr-panel').forEach(function(p){p.style.display='none';});
+  btn.classList.add('active');
+  document.getElementById('tab-'+tab).style.display='block';
+}
+</script>
+</body>
+</html>
