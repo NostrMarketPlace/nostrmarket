@@ -194,7 +194,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24
 <body>
 <header>
   <div class="logo"><div class="logo-icon">&#9889;</div><div class="logo-text">Nostr<span>Market</span></div></div>
-  <nav><a href="#">Directory</a><a href="about.html">About</a><button class="btn" onclick="openModal()">+ Submit</button></nav>
+  <nav><a href="#">Directory</a><a href="about.html">About</a>
+    <a href="pricing.html" style="color:var(--accent);">Pricing</a><button class="btn" onclick="openModal()">+ Submit</button></nav>
 </header>
 
 <section class="hero">
@@ -653,7 +654,7 @@ var SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI
 function sbFetch(t,d){return fetch(SB_URL+"/rest/v1/"+t,{method:"POST",headers:{"Content-Type":"application/json","apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY,"Prefer":"return=minimal"},body:JSON.stringify(d)});}
 function getVal(id){var e=document.getElementById(id);return e?e.value.trim():"";}
 function showMsg(txt,ok){var m=document.createElement("div");m.style.cssText="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:"+(ok?"#2ecc71":"#e74c3c")+";color:#000;padding:12px 24px;border-radius:10px;font-family:Space Mono,monospace;font-size:13px;z-index:9999;font-weight:700;";m.textContent=txt;document.body.appendChild(m);setTimeout(function(){m.remove();},4000);}
-function submitProject(){var n=getVal("p-name"),u=getVal("p-url"),d=getVal("p-desc"),np=getVal("p-npub");var pl=document.querySelector("#fp input[type=\"checkbox\"]");if(!n||!u||!d){showMsg("Please fill in all required fields.",false);return;}if(pl&&!pl.checked){showMsg("Please confirm the pledge.",false);return;}var btn=document.querySelector("#fp .fsub");btn.textContent="Submitting...";btn.disabled=true;var payArr=[];if(document.getElementById("p-pay-ln")&&document.getElementById("p-pay-ln").checked)payArr.push("lightning");if(document.getElementById("p-pay-cashu")&&document.getElementById("p-pay-cashu").checked)payArr.push("cashu");sbFetch("listings",{type:"project",name:n,url:u,description:d,npub:np||null,data:{pay:payArr}}).then(function(r){if(r.ok){showMsg("Project submitted! Thank you.",true);closeModal();}else r.text().then(function(t){showMsg("Error: "+t,false);});}).catch(function(){showMsg("Network error.",false);}).finally(function(){btn.textContent="Submit Project";btn.disabled=false;});}
+function submitProject(){var n=getVal("p-name"),u=getVal("p-url"),d=getVal("p-desc"),np=getVal("p-npub");var pl=document.querySelector("#fp input[type=\"checkbox\"]");if(!n||!u||!d){showMsg("Please fill in all required fields.",false);return;}if(pl&&!pl.checked){showMsg("Please confirm the pledge.",false);return;}var btn=document.querySelector("#fp .fsub");btn.textContent="Submitting...";btn.disabled=true;var payArr=[];if(document.getElementById("p-pay-ln")&&document.getElementById("p-pay-ln").checked)payArr.push("lightning");if(document.getElementById("p-pay-cashu")&&document.getElementById("p-pay-cashu").checked)payArr.push("cashu");sbFetch("listings",{type:"project",name:n,url:u,description:d,npub:np||null,data:{pay:payArr}}).then(function(r){if(r.ok){showMsg("Submitted! Want Verified or Featured? See pricing.",true);closeModal();setTimeout(function(){if(confirm("Get Verified (1500 sats) or Featured (10000 sats)?\nSee pricing page for details."))window.open("pricing.html","_blank");},500);}else r.text().then(function(t){showMsg("Error: "+t,false);});}).catch(function(){showMsg("Network error.",false);}).finally(function(){btn.textContent="Submit Project";btn.disabled=false;});}
 function submitCreator(){
   var n=getVal("c-name"),np=getVal("c-npub"),b=getVal("c-bio");
   var sells=getVal("c-sells").split(",").map(function(s){return s.trim();}).filter(Boolean).slice(0,5);
@@ -669,7 +670,7 @@ function submitCreator(){
   var photoFile=document.getElementById("c-photo")?document.getElementById("c-photo").files[0]:null;
   function doSubmit(photoB64){
     sbFetch("listings",{type:"creator",name:n,npub:np,description:b,data:{cats:cats,sells:sells,plat:plat,tw:tw,photo:photoB64||null}})
-    .then(function(r){if(r.ok){showMsg("Creator submitted! Thank you.",true);closeModal();}else r.text().then(function(t){showMsg("Error: "+t,false);});})
+    .then(function(r){if(r.ok){showMsg("Submitted! Want Verified or Featured? See pricing.",true);closeModal();setTimeout(function(){if(confirm("Get Verified (1500 sats) or Featured (10000 sats)?\nSee pricing page for details."))window.open("pricing.html","_blank");},500);}else r.text().then(function(t){showMsg("Error: "+t,false);});})
     .catch(function(){showMsg("Network error.",false);})
     .finally(function(){btn.textContent="Submit Creator";btn.disabled=false;});
   }
@@ -689,7 +690,7 @@ function submitCommunity(){
   if(pl&&!pl.checked){showMsg("Please confirm the pledge.",false);return;}
   var btn=document.querySelector("#fm .fsub");btn.textContent="Submitting...";btn.disabled=true;
   sbFetch("listings",{type:"community",name:n,npub:np||null,url:u||null,description:d,data:{city:ci,country:co,freq:freq}})
-  .then(function(r){if(r.ok){showMsg("Community submitted! Thank you.",true);closeModal();}else r.text().then(function(t){showMsg("Error: "+t,false);});})
+  .then(function(r){if(r.ok){showMsg("Submitted! Want Verified or Featured? See pricing.",true);closeModal();setTimeout(function(){if(confirm("Get Verified (1500 sats) or Featured (10000 sats)?\nSee pricing page for details."))window.open("pricing.html","_blank");},500);}else r.text().then(function(t){showMsg("Error: "+t,false);});})
   .catch(function(){showMsg("Network error.",false);})
   .finally(function(){btn.textContent="Submit Community";btn.disabled=false;});
 }
