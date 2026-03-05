@@ -1,0 +1,6 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="12" fill="#0a0a0a"/>
+  <text x="32" y="38" font-family="Arial,sans-serif" font-size="32" text-anchor="middle" fill="#f5a623">⚡</text>
+  <text x="25" y="56" font-family="Arial Black,sans-serif" font-weight="900" font-size="14" text-anchor="middle" fill="white">N</text>
+  <text x="39" y="56" font-family="Arial Black,sans-serif" font-weight="900" font-size="14" text-anchor="middle" fill="#f5a623">M</text>
+</svg>
