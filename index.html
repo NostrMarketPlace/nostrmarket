@@ -68,6 +68,7 @@ h1 em{font-style:normal;color:var(--accent);}
 .cprev-grad{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,var(--card));}
 .cstat{position:absolute;top:12px;right:12px;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;font-family:'Space Mono',monospace;}
 .s-active{background:rgba(39,174,96,.15);border:1px solid rgba(39,174,96,.4);color:#2ecc71;}
+.s-expired{background:rgba(231,76,60,.15);border:1px solid rgba(231,76,60,.4);color:#e74c3c;}
 .s-dev{background:rgba(52,152,219,.15);border:1px solid rgba(52,152,219,.4);color:#3498db;}
 .s-exp{background:rgba(155,89,182,.15);border:1px solid rgba(155,89,182,.4);color:#9b59b6;}
 .s-leg{background:rgba(127,140,141,.15);border:1px solid rgba(127,140,141,.25);color:#7f8c8d;}
@@ -195,9 +196,9 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24
   <h1>Discover<br><em>Nostr</em><br>Marketplaces</h1>
   <p class="hero-sub">The only directory of decentralized marketplace projects, independent creators and local communities on Nostr.</p>
   <div class="stats">
-    <div class="stat"><div class="stat-num">9</div><div class="stat-label">Projects</div></div>
-    <div class="stat"><div class="stat-num">6</div><div class="stat-label">Creators</div></div>
-    <div class="stat"><div class="stat-num">5</div><div class="stat-label">Communities</div></div>
+    <div class="stat"><div class="stat-num" id="cnt-p">9</div><div class="stat-label">Projects</div></div>
+    <div class="stat"><div class="stat-num" id="cnt-c">6</div><div class="stat-label">Creators</div></div>
+    <div class="stat"><div class="stat-num" id="cnt-m">5</div><div class="stat-label">Communities</div></div>
     <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Decentralized</div></div>
   </div>
 </section>
@@ -419,8 +420,8 @@ function applyAvatar(imgEl, url, fallbackEmoji) {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
-function sCls(s){return{active:'s-active',dev:'s-dev',experimental:'s-exp',legacy:'s-leg'}[s]||'s-active';}
-function sLbl(s){return{active:'Active',dev:'In Dev',experimental:'Experimental',legacy:'Legacy'}[s]||s;}
+function sCls(s){return{active:'s-active',dev:'s-dev',experimental:'s-exp',legacy:'s-leg',expired:'s-expired',featured:'s-active',verified:'s-active'}[s]||'s-active';}
+function sLbl(s){return{active:'Active',dev:'In Dev',experimental:'Experimental',legacy:'Legacy',expired:'Expired',featured:'Featured',verified:'Verified'}[s]||s;}
 function strs(r){var f=Math.floor(r),h=r%1>=.5?1:0;return'★'.repeat(f)+(h?'½':'')+'☆'.repeat(5-f-h);}
 function exp(d){if(d>30)return '<span class="exp">&#128336; '+d+'d left</span>';return '<span class="exp soon">&#9888; '+d+'d left</span>';}
 function bdg(item){var b='';if(item.f)b+='<span class="badge-f">&#9733; Featured</span>';if(item.v)b+='<span class="badge-v">&#10003; Verified</span>';return b?'<div class="bdgs">'+b+'</div>':'';}
@@ -661,10 +662,13 @@ function loadFromSupabase(){
     if(!rows||!rows.length){render();return;}
     var nextId=1000;
     rows.forEach(function(row){
+      var now=new Date();
+      var expDate=row.expires_at?new Date(row.expires_at):null;
+      var isExpired=expDate&&expDate<now;
       var item={id:nextId++,name:row.name,desc:row.description,npub:row.npub||"",url:row.url||"",
-        st:row.tier==="featured"?"featured":(row.tier==="verified"?"verified":"active"),
+        st:isExpired?"expired":(row.tier==="featured"?"featured":(row.tier==="verified"?"verified":"active")),
         f:row.tier==="featured",v:row.tier==="verified"||row.tier==="featured",
-        e:String.fromCodePoint(0x26A1),exp:null,fromDB:true};
+        e:String.fromCodePoint(0x26A1),exp:expDate,fromDB:true};
       if(row.type==="project"){
         item.tl=(row.data&&row.data.type)?row.data.type:"Other";
         item.type=(row.data&&row.data.type)?row.data.type:"other";
@@ -683,9 +687,25 @@ function loadFromSupabase(){
         communities.push(item);
       }
     });
+    updateCounts();
     render();
   })
   .catch(function(){render();});
+}
+function updateCounts(){
+  var cp=document.getElementById('cnt-p');
+  var cc=document.getElementById('cnt-c');
+  var cm=document.getElementById('cnt-m');
+  var bp=document.getElementById('bp');
+  var bc=document.getElementById('bc');
+  var bm=document.getElementById('bm');
+  var np=projects.length,nc=creators.length,nm=communities.length;
+  if(cp) cp.textContent=np;
+  if(cc) cc.textContent=nc;
+  if(cm) cm.textContent=nm;
+  if(bp) bp.innerHTML='Projects <span class="mcnt">'+np+'</span>';
+  if(bc) bc.innerHTML='Creators <span class="mcnt">'+nc+'</span>';
+  if(bm) bm.innerHTML='Communities <span class="mcnt">'+nm+'</span>';
 }
 loadFromSupabase();
 </script>
