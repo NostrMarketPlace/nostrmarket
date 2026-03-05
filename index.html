@@ -434,7 +434,7 @@ function rptBtn(name){
 function renderP(p){
   var gh=p.gh?'<a class="clnk" href="'+p.gh+'" target="_blank" onclick="event.stopPropagation()">&#9015; GitHub</a>':'';
   var tw=p.tw?'<a class="clnk" href="https://twitter.com/'+p.tw.replace('@','')+'" target="_blank" onclick="event.stopPropagation()">X '+p.tw+'</a>':'';
-  var dc={active:'#2ecc71',dev:'#3498db',experimental:'#9b59b6',legacy:'#7f8c8d'}[p.st]||'#2ecc71';
+  var dc={active:'#2ecc71',dev:'#3498db',experimental:'#9b59b6',legacy:'#7f8c8d',expired:'#e74c3c',featured:'#f5a623',verified:'#7fb3d3'}[p.st]||'#2ecc71';
   var div=document.createElement('div');
   div.className='card'+(p.f?' feat':'');
   div.dataset.url=p.url;
@@ -673,17 +673,20 @@ function loadFromSupabase(){
         item.tl=(row.data&&row.data.type)?row.data.type:"Other";
         item.type=(row.data&&row.data.type)?row.data.type:"other";
         item.ln="";item.pay=[];item.av=[];item.oss=false;item.gh="";item.tw="";
+        item.act="Community submitted";
         projects.push(item);
       }else if(row.type==="creator"){
         item.handle=row.npub?row.npub.substring(0,12)+"...":"nostr";
         item.bio=row.description;item.cat="other";item.cl="Creator";
         item.sells=[];item.plat=["Nostr"];item.rat=0;item.tw="";item.gh="";
+        item.act="Community submitted";
         creators.push(item);
       }else if(row.type==="community"){
         item.flag=String.fromCodePoint(0x1F30D);item.reg="other";
         item.city=(row.data&&row.data.city)?row.data.city:"";
         item.country=(row.data&&row.data.country)?row.data.country:"";
         item.members="?";item.ln="";item.nostr="";
+        item.act="Community submitted";
         communities.push(item);
       }
     });
