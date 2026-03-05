@@ -443,9 +443,13 @@ function renderP(p){
   div.dataset.url=p.url;
   if(p.npub) div.dataset.npub=p.npub;
   /* PHASE3: zde bude nostrLoadAvatars() nastavovat src z Nostr kind:0 profilu */
-  var logoHtml='<div class="cico" data-npub="'+(p.npub||'')+'">'+p.e+'</div>';
+  var faviconUrl='';
+  try{if(p.url)faviconUrl='https://www.google.com/s2/favicons?domain='+new URL(p.url).hostname+'&sz=64';}catch(e){}
+  var logoHtml=faviconUrl
+    ?'<div class="cico" data-npub="'+(p.npub||'')+'">'+'<img src="'+faviconUrl+'" width="32" height="32" style="border-radius:6px;" onerror="this.parentNode.innerHTML=String.fromCodePoint(0x26A1)"></div>'
+    :'<div class="cico" data-npub="'+(p.npub||'')+'">'+p.e+'</div>';
   div.innerHTML=
-    '<div class="cprev"><div class="cprev-ico">'+p.e+'</div><div class="cprev-grad"></div>'
+    '<div class="cprev"><div class="cprev-ico">'+(faviconUrl?'<img src="'+faviconUrl+'" width="44" height="44" style="border-radius:8px;opacity:.65" onerror="this.style.display=\'none\'">':p.e)+'</div><div class="cprev-grad"></div>'
     +'<div class="cstat '+sCls(p.st)+'">'+sLbl(p.st)+'</div></div>'
     +'<div class="cbody">'+bdg(p)
     +'<div class="ctop">'+logoHtml+'<div><div class="cname">'+p.name+'</div><div class="ctype">'+p.tl+'</div></div></div>'
