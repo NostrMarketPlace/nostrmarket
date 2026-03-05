@@ -69,6 +69,7 @@ h1 em{font-style:normal;color:var(--accent);}
 .cstat{position:absolute;top:12px;right:12px;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;font-family:'Space Mono',monospace;}
 .s-active{background:rgba(39,174,96,.15);border:1px solid rgba(39,174,96,.4);color:#2ecc71;}
 .s-expired{background:rgba(231,76,60,.15);border:1px solid rgba(231,76,60,.4);color:#e74c3c;}
+.s-expired{background:rgba(231,76,60,.15);border:1px solid rgba(231,76,60,.4);color:#e74c3c;}
 .s-dev{background:rgba(52,152,219,.15);border:1px solid rgba(52,152,219,.4);color:#3498db;}
 .s-exp{background:rgba(155,89,182,.15);border:1px solid rgba(155,89,182,.4);color:#9b59b6;}
 .s-leg{background:rgba(127,140,141,.15);border:1px solid rgba(127,140,141,.25);color:#7f8c8d;}
@@ -291,10 +292,10 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24
       <div class="fg"><label>Description * (max 120 chars)</label><input type="text" id="p-desc" maxlength="120" placeholder="One-liner about the project"></div>
       <div class="frow2">
         <div class="fg"><label>Type *</label><select><option>P2P Marketplace</option><option>Digital Products</option><option>Exchange</option></select></div>
-        <div class="fg"><label>Status *</label><select><option>Active</option><option>In Development</option><option>Experimental</option></select></div>
+        <div class="fg"><label>Status *</label><select id="p-status"><option>Active</option></select></div>
       </div>
       <div class="frow2">
-        <div class="fg"><label>Payment</label><select><option>Lightning</option><option>Lightning + Cashu</option></select></div>
+        <div class="fg"><label>Payment</label><div style="display:flex;gap:16px;margin-top:6px;"><label style="display:flex;align-items:center;gap:6px;font-weight:400;cursor:pointer;"><input type="checkbox" id="p-pay-ln" checked> ⚡ Lightning</label><label style="display:flex;align-items:center;gap:6px;font-weight:400;cursor:pointer;"><input type="checkbox" id="p-pay-cashu"> 🥜 Cashu</label></div></div>
         <div class="fg"><label>Open Source</label><select><option>Yes</option><option>No</option></select></div>
       </div>
       <div class="fg"><label>GitHub URL</label><input type="url" placeholder="https://github.com/..."></div>
@@ -423,10 +424,10 @@ function applyAvatar(imgEl, url, fallbackEmoji) {
 function sCls(s){return{active:'s-active',dev:'s-dev',experimental:'s-exp',legacy:'s-leg',expired:'s-expired',featured:'s-active',verified:'s-active'}[s]||'s-active';}
 function sLbl(s){return{active:'Active',dev:'In Dev',experimental:'Experimental',legacy:'Legacy',expired:'Expired',featured:'Featured',verified:'Verified'}[s]||s;}
 function strs(r){var f=Math.floor(r),h=r%1>=.5?1:0;return'★'.repeat(f)+(h?'½':'')+'☆'.repeat(5-f-h);}
-function exp(d){if(d>30)return '<span class="exp">&#128336; '+d+'d left</span>';return '<span class="exp soon">&#9888; '+d+'d left</span>';}
+function exp(d){if(!d)return '';var days=d;if(d instanceof Date){days=Math.ceil((d-new Date())/(1000*60*60*24));}if(days<0)return '<span class="exp soon">&#128308; Expired</span>';if(days>30)return '<span class="exp">&#128336; '+days+'d left</span>';return '<span class="exp soon">&#9888; '+days+'d left</span>';}
 function bdg(item){var b='';if(item.f)b+='<span class="badge-f">&#9733; Featured</span>';if(item.v)b+='<span class="badge-v">&#10003; Verified</span>';return b?'<div class="bdgs">'+b+'</div>':'';}
 function payT(x){return{lightning:'<span class="tag tl">&#9889; Lightning</span>',cashu:'<span class="tag tc">Cashu</span>'}[x]||'';}
-function avT(x){return{web:'<span class="tag tw">&#127760; Web</span>',selfhosted:'<span class="tag ts">Self-hosted</span>'}[x]||'';}
+function avT(x,url){return{web:'<a class="tag tw" href="'+(url||'#')+'" target="_blank" onclick="event.stopPropagation()" style="text-decoration:none;">&#127760; Web</a>',selfhosted:'<span class="tag ts">Self-hosted</span>'}[x]||'';}
 function rptBtn(name){
   return '<button class="rpt" onclick="event.stopPropagation();openReport(this)" data-name="'+name.replace(/"/g,'&quot;')+'">&#9873; Report</button>';
 }
@@ -447,9 +448,9 @@ function renderP(p){
     +'<div class="cbody">'+bdg(p)
     +'<div class="ctop">'+logoHtml+'<div><div class="cname">'+p.name+'</div><div class="ctype">'+p.tl+'</div></div></div>'
     +'<div class="cdesc">'+p.desc+'</div>'
-    +'<div class="ctags">'+p.pay.map(payT).join('')+p.av.map(avT).join('')+(p.oss?'<span class="tag to">OSS</span>':'')+'</div>'
+    +'<div class="ctags">'+p.pay.map(payT).join('')+p.av.map(function(x){return avT(x,p.url);}).join('')+(p.oss?'<span class="tag to">OSS</span>':'')+'</div>'
     +'<div class="cact"><div class="adot" style="background:'+dc+'"></div>'+p.act+'&nbsp;&nbsp;'+exp(p.exp)+'</div>'
-    +'<div class="cftr"><div class="clnks"><a class="clnk" href="'+p.url+'" target="_blank" onclick="event.stopPropagation()">&#128279; Visit</a>'+gh+tw+'</div>'
+    +'<div class="cftr"><div class="clnks">'+gh+tw+'</div>'
     +'<div class="cftr-r"><div class="crat"><span class="stars">'+strs(p.rat)+'</span> '+p.rat+'</div>'
     +'<button class="rpt" data-name="'+p.name.replace(/"/g,'&quot;')+'">&#9873; Report</button>'
     +'</div></div></div>';
@@ -651,7 +652,7 @@ var SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI
 function sbFetch(t,d){return fetch(SB_URL+"/rest/v1/"+t,{method:"POST",headers:{"Content-Type":"application/json","apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY,"Prefer":"return=minimal"},body:JSON.stringify(d)});}
 function getVal(id){var e=document.getElementById(id);return e?e.value.trim():"";}
 function showMsg(txt,ok){var m=document.createElement("div");m.style.cssText="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:"+(ok?"#2ecc71":"#e74c3c")+";color:#000;padding:12px 24px;border-radius:10px;font-family:Space Mono,monospace;font-size:13px;z-index:9999;font-weight:700;";m.textContent=txt;document.body.appendChild(m);setTimeout(function(){m.remove();},4000);}
-function submitProject(){var n=getVal("p-name"),u=getVal("p-url"),d=getVal("p-desc"),np=getVal("p-npub");var pl=document.querySelector("#fp input[type=\"checkbox\"]");if(!n||!u||!d){showMsg("Please fill in all required fields.",false);return;}if(pl&&!pl.checked){showMsg("Please confirm the pledge.",false);return;}var btn=document.querySelector("#fp .fsub");btn.textContent="Submitting...";btn.disabled=true;sbFetch("listings",{type:"project",name:n,url:u,description:d,npub:np||null,data:{}}).then(function(r){if(r.ok){showMsg("Project submitted! Thank you.",true);closeModal();}else r.text().then(function(t){showMsg("Error: "+t,false);});}).catch(function(){showMsg("Network error.",false);}).finally(function(){btn.textContent="Submit Project";btn.disabled=false;});}
+function submitProject(){var n=getVal("p-name"),u=getVal("p-url"),d=getVal("p-desc"),np=getVal("p-npub");var pl=document.querySelector("#fp input[type=\"checkbox\"]");if(!n||!u||!d){showMsg("Please fill in all required fields.",false);return;}if(pl&&!pl.checked){showMsg("Please confirm the pledge.",false);return;}var btn=document.querySelector("#fp .fsub");btn.textContent="Submitting...";btn.disabled=true;var payArr=[];if(document.getElementById("p-pay-ln")&&document.getElementById("p-pay-ln").checked)payArr.push("lightning");if(document.getElementById("p-pay-cashu")&&document.getElementById("p-pay-cashu").checked)payArr.push("cashu");sbFetch("listings",{type:"project",name:n,url:u,description:d,npub:np||null,data:{pay:payArr}}).then(function(r){if(r.ok){showMsg("Project submitted! Thank you.",true);closeModal();}else r.text().then(function(t){showMsg("Error: "+t,false);});}).catch(function(){showMsg("Network error.",false);}).finally(function(){btn.textContent="Submit Project";btn.disabled=false;});}
 function submitCreator(){var n=getVal("c-name"),np=getVal("c-npub"),b=getVal("c-bio");var pl=document.querySelector("#fc input[type=\"checkbox\"]");if(!n||!np||!b){showMsg("Please fill in all required fields.",false);return;}if(pl&&!pl.checked){showMsg("Please confirm the pledge.",false);return;}var btn=document.querySelector("#fc .fsub");btn.textContent="Submitting...";btn.disabled=true;sbFetch("listings",{type:"creator",name:n,npub:np,description:b,data:{}}).then(function(r){if(r.ok){showMsg("Creator submitted! Thank you.",true);closeModal();}else r.text().then(function(t){showMsg("Error: "+t,false);});}).catch(function(){showMsg("Network error.",false);}).finally(function(){btn.textContent="Submit Creator";btn.disabled=false;});}
 function submitCommunity(){var n=getVal("m-name"),np=getVal("m-npub"),ci=getVal("m-city"),co=getVal("m-country"),d=getVal("m-desc");var pl=document.querySelector("#fm input[type=\"checkbox\"]");if(!n||!ci||!co||!d){showMsg("Please fill in all required fields.",false);return;}if(pl&&!pl.checked){showMsg("Please confirm the pledge.",false);return;}var btn=document.querySelector("#fm .fsub");btn.textContent="Submitting...";btn.disabled=true;sbFetch("listings",{type:"community",name:n,npub:np||null,description:d,data:{city:ci,country:co}}).then(function(r){if(r.ok){showMsg("Community submitted! Thank you.",true);closeModal();}else r.text().then(function(t){showMsg("Error: "+t,false);});}).catch(function(){showMsg("Network error.",false);}).finally(function(){btn.textContent="Submit Community";btn.disabled=false;});}
 function submitReport(){var r=document.querySelector("input[name=\"rr\"]:checked");if(!r){alert("Please select a reason.");return;}sbFetch("reports",{reason:r.value,listing_id:null}).then(function(){closeReport();showMsg("Report submitted.",true);}).catch(function(){closeReport();});}
@@ -662,6 +663,7 @@ function loadFromSupabase(){
     if(!rows||!rows.length){render();return;}
     var nextId=1000;
     rows.forEach(function(row){
+      var now=new Date();var expDate=row.expires_at?new Date(row.expires_at):null;var isExpired=expDate&&expDate<now;
       var now=new Date();
       var expDate=row.expires_at?new Date(row.expires_at):null;
       var isExpired=expDate&&expDate<now;
@@ -672,7 +674,10 @@ function loadFromSupabase(){
       if(row.type==="project"){
         item.tl=(row.data&&row.data.type)?row.data.type:"Other";
         item.type=(row.data&&row.data.type)?row.data.type:"other";
-        item.ln="";item.pay=[];item.av=[];item.oss=false;item.gh="";item.tw="";
+        item.ln="";
+        item.pay=(row.data&&row.data.pay)?row.data.pay:[];
+        item.av=row.url?["web"]:[];
+        item.oss=false;item.gh="";item.tw="";
         item.act="Community submitted";
         projects.push(item);
       }else if(row.type==="creator"){
