@@ -230,10 +230,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24
     <span class="flbl">PAY:</span>
     <button class="chip" data-pf="pay" data-v="lightning" onclick="setPF('pay','lightning',this)">&#9889; Lightning</button>
     <button class="chip" data-pf="pay" data-v="cashu" onclick="setPF('pay','cashu',this)">Cashu</button>
-    <div class="divider"></div>
-    <span class="flbl">STATUS:</span>
-    <button class="chip" data-pf="status" data-v="active" onclick="setPF('status','active',this)">Active</button>
-    <button class="chip" data-pf="status" data-v="dev" onclick="setPF('status','dev',this)">In Dev</button>
   </div>
   <div class="frow" id="cf" style="display:none">
     <span class="flbl">CATEGORY:</span>
@@ -380,7 +376,7 @@ var projects=[];
 var creators=[];
 var communities=[];
 
-var mode='p', pfs={type:'all',pay:'all',status:'all'}, cfs={cat:'all'}, mfs={reg:'all'}, sq='';
+var mode='p', pfs={type:'all',pay:'all'}, cfs={cat:'all'}, mfs={reg:'all'}, sq='';
 
 // ── NOSTR AVATAR LOADER ─────────────────────────────────────────────────────
 // Loads profile images from Nostr relays via nostr.band API
@@ -432,6 +428,9 @@ function rptBtn(name){
 function renderP(p){
   var gh=p.gh?'<a class="clnk" href="'+p.gh+'" target="_blank" onclick="event.stopPropagation()">&#9015; GitHub</a>':'';
   var tw=p.tw?'<a class="clnk" href="https://twitter.com/'+p.tw.replace('@','')+'" target="_blank" onclick="event.stopPropagation()">X '+p.tw+'</a>':'';
+  var fb=p.fb?'<a class="clink" href="'+p.fb+'" target="_blank">📘</a>':'';
+  var ig=p.ig?'<a class="clink" href="'+p.ig+'" target="_blank">📷</a>':'';
+  var so=p.social_other?'<a class="clink" href="'+p.social_other+'" target="_blank">🔗</a>':'';
   var dc={active:'#2ecc71',dev:'#3498db',experimental:'#9b59b6',legacy:'#7f8c8d',expired:'#e74c3c',featured:'#f5a623',verified:'#7fb3d3'}[p.st]||'#2ecc71';
   var div=document.createElement('div');
   div.className='card'+(p.f?' feat':'');
@@ -469,6 +468,9 @@ function renderC(c){
   var sells=c.sells.map(function(s){return'<span class="tsell">'+s+'</span>';}).join('');
   var plats=c.plat.map(function(p){var pn=typeof p==='object'?p.name:p;var pu=typeof p==='object'?p.url:null;return pu?'<a class="plat" href="'+pu+'" target="_blank">'+pn+'</a>':'<div class="plat">'+pn+'</div>';}).join('');
   var tw=c.tw?'<a class="clink" href="https://twitter.com/'+c.tw.replace('@','')+'" target="_blank">X '+c.tw+'</a>':'';
+  var fb=c.fb?'<a class="clink" href="'+c.fb+'" target="_blank">📘</a>':'';
+  var ig=c.ig?'<a class="clink" href="'+c.ig+'" target="_blank">📷</a>':'';
+  var so=c.social_other?'<a class="clink" href="'+c.social_other+'" target="_blank">🔗</a>':'';
   var b='';if(c.f)b+='<span class="badge-f">&#9733; Featured</span>';if(c.v)b+='<span class="badge-v">&#10003; Verified</span>';
   var div=document.createElement('div');
   div.className='cc'+(c.f?' feat':'');
@@ -485,7 +487,7 @@ function renderC(c){
     +'<div class="slbl">Sells</div><div class="cc-sells">'+sells+'</div>'
     +'<div class="slbl">Active on</div><div class="cc-plat">'+plats+'</div></div>'
     +'<div class="cc-ftr">'+(c.npub&&c.npub.indexOf('...')===-1?'<a class="clink" href="https://primal.net/p/'+c.npub+'" target="_blank">&#128995; Nostr profile</a>':'')
-    +'<div style="display:flex;align-items:center;gap:8px;">'+tw+exp(c.exp)
+    +'<div style="display:flex;align-items:center;gap:8px;">'+tw+fb+ig+so+exp(c.exp)
     +'<button class="rpt" data-name="'+c.name.replace(/"/g,'&quot;')+'">&#9873; Report</button>'
     +'</div><div class="crat"></div>';
   div.querySelector('.rpt').addEventListener('click',function(e){
@@ -529,7 +531,6 @@ function render(){
     items=projects.filter(function(p){
       return(pfs.type==='all'||p.type===pfs.type)
         &&(pfs.pay==='all'||p.pay.indexOf(pfs.pay)>-1)
-        &&(pfs.status==='all'||p.st===pfs.status)
         &&(!s||p.name.toLowerCase().indexOf(s)>-1||p.desc.toLowerCase().indexOf(s)>-1);
     });
     all=projects.length;
@@ -709,8 +710,9 @@ function loadFromSupabase(){
         e:String.fromCodePoint(0x26A1),exp:expDate,fromDB:true};
       if(row.type==="project"){
         item.tl=(row.data&&row.data.type)?row.data.type:"Other";
-        item.type=(row.data&&row.data.type)?row.data.type:"other";
+        var typeRaw=(row.data&&row.data.type)?row.data.type:"other";var typeMap={"P2P Marketplace":"p2p","Digital Products":"digital","Exchange":"exchange"};item.type=typeMap[typeRaw]||"other";item.tl=typeRaw;
         item.ln="";
+        item.fb=(row.data&&row.data.fb)?row.data.fb:"";item.ig=(row.data&&row.data.ig)?row.data.ig:"";item.social_other=(row.data&&row.data.social_other)?row.data.social_other:"";
         item.pay=(row.data&&row.data.pay)?row.data.pay:[];
         item.av=row.url?["web"]:[];
         item.oss=false;item.gh="";item.tw="";
@@ -724,7 +726,7 @@ function loadFromSupabase(){
         item.cl=cats.length?cats.map(function(c){return c.charAt(0).toUpperCase()+c.slice(1);}).join(" · "):"Creator";
         item.sells=(row.data&&row.data.sells)?row.data.sells:[];
         item.plat=(row.data&&row.data.plat&&row.data.plat.length)?row.data.plat:[];
-        item.tw=(row.data&&row.data.tw)?row.data.tw:"";
+        item.tw=(row.data&&row.data.tw)?row.data.tw:"";item.fb=(row.data&&row.data.fb)?row.data.fb:"";item.ig=(row.data&&row.data.ig)?row.data.ig:"";item.social_other=(row.data&&row.data.social_other)?row.data.social_other:"";
         item.photo=(row.data&&row.data.photo)?row.data.photo:null;
         item.rat=0;item.gh="";
         item.act="Community submitted";
