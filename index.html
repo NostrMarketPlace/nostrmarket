@@ -457,7 +457,7 @@ function renderP(p){
     +'<div class="ctags">'+p.pay.map(payT).join('')+p.av.map(function(x){return avT(x,p.url);}).join('')+(p.oss?'<span class="tag to">OSS</span>':'')+'</div>'
     +'<div class="cact"><div class="adot" style="background:'+dc+'"></div>'+(p.act||'')+'&nbsp;&nbsp;'+exp(p.exp)+'</div>'
     +'<div class="cftr"><div class="clnks">'+gh+tw+'</div>'
-    +'<div class="cftr-r"><div class="crat">+'<button class="rpt" data-name="'+p.name.replace(/"/g,'&quot;')+'">&#9873; Report</button>'
+    +'<div class="cftr-r"><div class="crat"></div>'+"+ '<button class="rpt" data-name="'+p.name.replace(/"/g,'&quot;')+'">&#9873; Report</button>'
     +'</div></div></div>';
     div.querySelector('.rpt').addEventListener('click',function(e){
     e.stopPropagation();openReport(this.dataset.name);
@@ -471,6 +471,36 @@ function renderP(p){
 
 function renderC(c){
   var sells=c.sells.map(function(s){return'<span class="tsell">'+s+'</span>';}).join('');
-  var plats=c.plat.map(function(p){var pn=typeof p==='object'?p.name:p;var pu=typeof p==='object'?p.url:null;return pu?'<a class="plat" href="'+pu+'" target="_blank">'+pn+'</a>':'<div class="plat">'+pn+'</div>';
+  var plats=c.plat.map(function(p){var pn=typeof p==='object'?p.name:p;var pu=typeof p==='object'?p.url:null;return pu?'<a class="plat" href="'+pu+'" target="_blank">'+pn+'</a>':'<div class="plat">'+pn+'</div>';}).join('');
+  var tw=c.tw?'<a class="clink" href="https://twitter.com/'+c.tw.replace('@','')+'" target="_blank">X '+c.tw+'</a>':'';
+  var b='';if(c.f)b+='<span class="badge-f">&#9733; Featured</span>';if(c.v)b+='<span class="badge-v">&#10003; Verified</span>';
+  var div=document.createElement('div');
+  div.className='cc'+(c.f?' feat':'');
+  if(c.npub) div.dataset.npub=c.npub;
+  /* PHASE3: zde bude nostrLoadAvatars() nastavovat src avataru z Nostr kind:0 profilu */
+  var avHtml=c.photo?'<div class="cc-av" data-npub="'+(c.npub||'')+'"><img src="'+c.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"><div class="cc-ring"></div></div>':'<div class="cc-av" data-npub="'+(c.npub||'')+'">'+c.e+'<div class="cc-ring"></div></div>';
+  div.innerHTML=
+    '<div class="cc-hdr"><div class="cc-av">'+avHtml+'<div class="cc-ring"></div></div>'
+    +'<div class="cc-info"><div class="cc-name">'+c.name+'</div>'
+    +'<div class="cc-handle">&#9889; '+c.handle+'</div>'
+    +'<div class="cc-cat">'+c.e+' '+c.cl+'</div>'
+    +(b?'<div class="cc-bdgs">'+b+'</div>':'')+'</div></div>'
+    +'<div class="cc-body"><div class="cc-bio">'+c.bio+'</div>'
+    +'<div class="slbl">Sells</div><div class="cc-sells">'+sells+'</div>'
+    +'<div class="slbl">Active on</div><div class="cc-plat">'+plats+'</div></div>'
+    +'<div class="cc-ftr">'+(c.npub&&c.npub.indexOf('...')===-1?'<a class="clink" href="https://primal.net/p/'+c.npub+'" target="_blank">&#128995; Nostr profile</a>':'')
+    +'<div style="display:flex;align-items:center;gap:8px;">'+tw+exp(c.exp)
+    +'<button class="rpt" data-name="'+c.name.replace(/"/g,'&quot;')+'">&#9873; Report</button>'
+    +'</div><div class<div class="crat"></div>';
+  div.querySele.querySelector('.rpt').addEventListener('click',function(e){
+    e.stopPropagation();openReport(this.dataset.name);
+  });
+  if(c.npub){
+    var av = div.querySelector('.cc-av');
+    if(av) loadAvatar(c.npub, av, c.e);
+  }
+  return div;
+}
+>
 </body>
 </html>
