@@ -76,6 +76,7 @@ header{position:sticky;top:0;z-index:10;border-bottom:1px solid var(--border);pa
 .btn-feature{background:rgba(201,146,42,.2);color:#c9922a;}
 .btn-remove{background:rgba(231,76,60,.2);color:var(--red);}
 .btn-restore{background:rgba(46,204,113,.2);color:var(--green);}
+.btn-other{background:rgba(155,89,182,.15);color:#9b59b6;border-color:rgba(155,89,182,.3);}
 .btn-resolve{background:rgba(46,204,113,.2);color:var(--green);}
 .empty{text-align:center;padding:48px;color:var(--muted);font-size:14px;}
 .loading{text-align:center;padding:48px;color:var(--muted);font-family:'Space Mono',monospace;font-size:13px;}
@@ -270,15 +271,18 @@ function renderListings(filter){
     var link=r.url?'<a href="'+r.url+'" target="_blank">↗</a>':"";
     var actions="";
     if(r.status!=="removed"){
-      if(r.tier==="free") actions+='<button class="act-btn btn-verify" onclick="setTier('+r.id+',\'verified\')">Verify</button>';
+      if(r.tier==="free"){
+      actions+='<button class="act-btn btn-verify" onclick="setTier('+r.id+',\'verified\')">Verify</button>';
+      actions+='<button class="act-btn btn-other" onclick="setTier('+r.id+',\'verified\')" title="Other payment method">Other ✓</button>';
+    }
       if(r.tier!=="featured") actions+='<button class="act-btn btn-feature" onclick="setTier('+r.id+',\'featured\')">Feature</button>';
       actions+='<button class="act-btn btn-remove" onclick="removeListing('+r.id+')">Remove</button>';
     } else {
       actions+='<button class="act-btn btn-restore" onclick="restoreListing('+r.id+')">Restore</button>';
     }
     return '<div class="tbl-row listings-row">'
-      +'<div><div class="tbl-name">'+escHtml(r.name)+link+'</div><div class="tbl-sub">'+escHtml(r.description||"").substring(0,60)+'...</div></div>'
-      +'<div class="tbl-cell"><span class="badge badge-'+r.type+'">'+r.type+'</span></div>'
+      +'<div><div class="tbl-name">'+escHtml(r.name)+link+'</div><div class="tbl-sub">'+escHtml((r.description&&r.description!=='undefined')?r.description:'').substring(0,60)+'</div></div>'
+      +'<div class="tbl-cell"><span class="badge badge-'+r.type+'">'+((r.type==="project"&&r.data&&r.data.type)?r.data.type:r.type)+'</span></div>'
       +'<div class="tbl-cell"><span class="badge badge-'+r.tier+'">'+r.tier+'</span></div>'
       +'<div class="tbl-cell"><span class="badge badge-'+r.status+'">'+r.status+'</span></div>'
       +'<div class="tbl-cell">'+date+'</div>'
