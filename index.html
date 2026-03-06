@@ -297,11 +297,11 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24
       <div class="fg"><label>Website URL *</label><input type="url" id="p-url" placeholder="https://..."></div>
       <div class="fg"><label>Description * (max 120 chars)</label><input type="text" id="p-desc" maxlength="120" placeholder="One-liner about the project"></div>
       <div class="frow2">
-        <div class="fg"><label>Type *</label><select><option>P2P Marketplace</option><option>Digital Products</option><option>Exchange</option></select></div>
+        <div class="fg"><label>Type *</label><select id="p-type"><option>P2P Marketplace</option><option>Digital Products</option><option>Exchange</option><option>Other</option></select></div>
         <div class="fg"><label>Status *</label><select id="p-status"><option>Active</option></select></div>
       </div>
       <div class="frow2">
-        <div class="fg"><label>Payment</label><div style="display:flex;gap:16px;margin-top:6px;"><label style="display:flex;align-items:center;gap:6px;font-weight:400;cursor:pointer;"><input type="checkbox" id="p-pay-ln" checked> ⚡ Lightning</label><label style="display:flex;align-items:center;gap:6px;font-weight:400;cursor:pointer;"><input type="checkbox" id="p-pay-cashu"> 🥜 Cashu</label></div></div>
+        <div class="fg"><label>Payment</label><div style="display:flex;gap:16px;margin-top:6px;"><label style="display:flex;align-items:center;gap:6px;font-weight:400;cursor:pointer;"><input type="checkbox" id="p-pay-ln" checked> ⚡ Lightning</label><label style="display:flex;align-items:center;gap:6px;font-weight:400;cursor:pointer;"><input type="checkbox" id="p-pay-cashu"> 🥜 Cashu</label><label style="display:flex;align-items:center;gap:6px;font-weight:400;cursor:pointer;"><input type="checkbox" id="p-pay-other"> 🤝 Other</label></div></div>
         <div class="fg"><label>Open Source</label><select><option>Yes</option><option>No</option></select></div>
       </div>
       <div class="fg"><label>GitHub URL</label><input type="url" placeholder="https://github.com/..."></div>
@@ -450,15 +450,12 @@ function renderP(p){
     +'<div class="ctop">'+logoHtml+'<div><div class="cname">'+p.name+'</div><div class="ctype">'+p.tl+'</div></div></div>'
     +'<div class="cdesc">'+p.desc+'</div>'
     +'<div class="ctags">'+p.pay.map(payT).join('')+p.av.map(function(x){return avT(x,p.url);}).join('')+(p.oss?'<span class="tag to">OSS</span>':'')+'</div>'
-    +'<div class="cact"><div class="adot" style="background:'+dc+'"></div>'+p.act+'&nbsp;&nbsp;'+exp(p.exp)+'</div>'
+    +'<div class="cact"><div class="adot" style="background:'+dc+'"></div>'+(p.act||'')+'&nbsp;&nbsp;'+exp(p.exp)+'</div>'
     +'<div class="cftr"><div class="clnks">'+gh+tw+'</div>'
     +'<div class="cftr-r"><div class="crat"><span class="stars">'+strs(p.rat)+'</span> '+p.rat+'</div>'
     +'<button class="rpt" data-name="'+p.name.replace(/"/g,'&quot;')+'">&#9873; Report</button>'
     +'</div></div></div>';
-  div.addEventListener('click', function(e){
-    if(e.target.tagName!=='A'&&e.target.tagName!=='BUTTON'){window.open(this.dataset.url,'_blank');}
-  });
-  div.querySelector('.rpt').addEventListener('click',function(e){
+    div.querySelector('.rpt').addEventListener('click',function(e){
     e.stopPropagation();openReport(this.dataset.name);
   });
   if(p.npub){
@@ -654,7 +651,7 @@ var SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI
 function sbFetch(t,d){return fetch(SB_URL+"/rest/v1/"+t,{method:"POST",headers:{"Content-Type":"application/json","apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY,"Prefer":"return=minimal"},body:JSON.stringify(d)});}
 function getVal(id){var e=document.getElementById(id);return e?e.value.trim():"";}
 function showMsg(txt,ok){var m=document.createElement("div");m.style.cssText="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:"+(ok?"#2ecc71":"#e74c3c")+";color:#000;padding:12px 24px;border-radius:10px;font-family:Space Mono,monospace;font-size:13px;z-index:9999;font-weight:700;";m.textContent=txt;document.body.appendChild(m);setTimeout(function(){m.remove();},4000);}
-function submitProject(){var n=getVal("p-name"),u=getVal("p-url"),d=getVal("p-desc"),np=getVal("p-npub");var pl=document.querySelector("#fp input[type=\"checkbox\"]");if(!n||!u||!d){showMsg("Please fill in all required fields.",false);return;}if(pl&&!pl.checked){showMsg("Please confirm the pledge.",false);return;}var btn=document.querySelector("#fp .fsub");btn.textContent="Submitting...";btn.disabled=true;var payArr=[];if(document.getElementById("p-pay-ln")&&document.getElementById("p-pay-ln").checked)payArr.push("lightning");if(document.getElementById("p-pay-cashu")&&document.getElementById("p-pay-cashu").checked)payArr.push("cashu");sbFetch("listings",{type:"project",name:n,url:u,description:d,npub:np||null,data:{pay:payArr}}).then(function(r){if(r.ok){showMsg("Submitted! Want Verified or Featured? See pricing.",true);closeModal();setTimeout(function(){if(confirm("Get Verified (1500 sats) or Featured (10000 sats)?\nSee pricing page for details."))window.open("pricing.html","_blank");},500);}else r.text().then(function(t){showMsg("Error: "+t,false);});}).catch(function(){showMsg("Network error.",false);}).finally(function(){btn.textContent="Submit Project";btn.disabled=false;});}
+function submitProject(){var n=getVal("p-name"),u=getVal("p-url"),d=getVal("p-desc"),np=getVal("p-npub");var pl=document.querySelector("#fp input[type=\"checkbox\"]");if(!n||!u||!d){showMsg("Please fill in all required fields.",false);return;}if(pl&&!pl.checked){showMsg("Please confirm the pledge.",false);return;}var btn=document.querySelector("#fp .fsub");btn.textContent="Submitting...";btn.disabled=true;var payArr=[];if(document.getElementById("p-pay-ln")&&document.getElementById("p-pay-ln").checked)payArr.push("lightning");if(document.getElementById("p-pay-cashu")&&document.getElementById("p-pay-cashu").checked)payArr.push("cashu");if(document.getElementById("p-pay-other")&&document.getElementById("p-pay-other").checked)payArr.push("other");var ptype=document.getElementById("p-type")?document.getElementById("p-type").value:"Other";sbFetch("listings",{type:"project",name:n,url:u,description:d,npub:np||null,data:{pay:payArr,type:ptype}}).then(function(r){if(r.ok){showMsg("Submitted! Want Verified or Featured? See pricing.",true);closeModal();setTimeout(function(){if(confirm("Get Verified (1500 sats) or Featured (10000 sats)?\nSee pricing page for details."))window.open("pricing.html","_blank");},500);}else r.text().then(function(t){showMsg("Error: "+t,false);});}).catch(function(){showMsg("Network error.",false);}).finally(function(){btn.textContent="Submit Project";btn.disabled=false;});}
 function submitCreator(){
   var n=getVal("c-name"),np=getVal("c-npub"),b=getVal("c-bio");
   var sells=getVal("c-sells").split(",").map(function(s){return s.trim();}).filter(Boolean).slice(0,5);
