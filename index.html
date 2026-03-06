@@ -260,7 +260,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24
     <select class="sort" onchange="doSort(this.value)">
       <option value="default">Sort: Default</option>
       <option value="name">Name A-Z</option>
-      <option value="rating">Top Rated</option>
+      
     </select>
   </div>
   <div class="grid" id="grid"></div>
@@ -333,7 +333,12 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24
         <div id="c-photo-preview" style="margin-top:8px;display:none;"><img id="c-photo-img" style="width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);"></div>
       </div>
       <div class="fg"><label>What do you sell? * <span style="font-weight:400;color:var(--muted);font-size:11px;">(oddělte čárkou, max 5)</span></label><input type="text" id="c-sells" placeholder="e.g. prints, tracks, templates"></div>
-      <div class="fg"><label>Platforms</label><input type="text" id="c-plat" placeholder="e.g. Primal, Shopstr, Damus"></div>
+      <div class="fg"><label>Platforms (max 3) – name &amp; link</label>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px;">
+          <div style="display:flex;gap:6px;"><input type="text" id="c-plat-1" placeholder="e.g. Primal" style="width:35%"><input type="url" id="c-plat-url-1" placeholder="https://primal.net/..." style="flex:1"></div>
+          <div style="display:flex;gap:6px;"><input type="text" id="c-plat-2" placeholder="e.g. Shopstr" style="width:35%"><input type="url" id="c-plat-url-2" placeholder="https://shopstr.store/..." style="flex:1"></div>
+          <div style="display:flex;gap:6px;"><input type="text" id="c-plat-3" placeholder="e.g. SatStash" style="width:35%"><input type="url" id="c-plat-url-3" placeholder="https://satstash.io/..." style="flex:1"></div>
+        </div></div>
       <div class="fg"><label>Twitter / X</label><input type="text" id="c-tw" placeholder="@handle"></div>
       <div class="pledge"><label><input type="checkbox"> I confirm my listings will not involve illegal goods, weapons, drugs, or harmful content. I take full responsibility.</label></div>
       <button class="fsub" onclick="submitCreator()">Submit Creator &#9889;</button>
@@ -452,8 +457,7 @@ function renderP(p){
     +'<div class="ctags">'+p.pay.map(payT).join('')+p.av.map(function(x){return avT(x,p.url);}).join('')+(p.oss?'<span class="tag to">OSS</span>':'')+'</div>'
     +'<div class="cact"><div class="adot" style="background:'+dc+'"></div>'+(p.act||'')+'&nbsp;&nbsp;'+exp(p.exp)+'</div>'
     +'<div class="cftr"><div class="clnks">'+gh+tw+'</div>'
-    +'<div class="cftr-r"><div class="crat"><span class="stars">'+strs(p.rat)+'</span> '+p.rat+'</div>'
-    +'<button class="rpt" data-name="'+p.name.replace(/"/g,'&quot;')+'">&#9873; Report</button>'
+    +'<div class="cftr-r"><div class="crat">+'<button class="rpt" data-name="'+p.name.replace(/"/g,'&quot;')+'">&#9873; Report</button>'
     +'</div></div></div>';
     div.querySelector('.rpt').addEventListener('click',function(e){
     e.stopPropagation();openReport(this.dataset.name);
@@ -467,321 +471,6 @@ function renderP(p){
 
 function renderC(c){
   var sells=c.sells.map(function(s){return'<span class="tsell">'+s+'</span>';}).join('');
-  var plats=c.plat.map(function(p){return'<div class="plat">'+p+'</div>';}).join('');
-  var tw=c.tw?'<a class="clink" href="https://twitter.com/'+c.tw.replace('@','')+'" target="_blank">X '+c.tw+'</a>':'';
-  var b='';if(c.f)b+='<span class="badge-f">&#9733; Featured</span>';if(c.v)b+='<span class="badge-v">&#10003; Verified</span>';
-  var div=document.createElement('div');
-  div.className='cc'+(c.f?' feat':'');
-  if(c.npub) div.dataset.npub=c.npub;
-  /* PHASE3: zde bude nostrLoadAvatars() nastavovat src avataru z Nostr kind:0 profilu */
-  var avHtml=c.photo?'<div class="cc-av" data-npub="'+(c.npub||'')+'"><img src="'+c.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"><div class="cc-ring"></div></div>':'<div class="cc-av" data-npub="'+(c.npub||'')+'">'+c.e+'<div class="cc-ring"></div></div>';
-  div.innerHTML=
-    '<div class="cc-hdr"><div class="cc-av">'+avHtml+'<div class="cc-ring"></div></div>'
-    +'<div class="cc-info"><div class="cc-name">'+c.name+'</div>'
-    +'<div class="cc-handle">&#9889; '+c.handle+'</div>'
-    +'<div class="cc-cat">'+c.e+' '+c.cl+'</div>'
-    +(b?'<div class="cc-bdgs">'+b+'</div>':'')+'</div></div>'
-    +'<div class="cc-body"><div class="cc-bio">'+c.bio+'</div>'
-    +'<div class="slbl">Sells</div><div class="cc-sells">'+sells+'</div>'
-    +'<div class="slbl">Active on</div><div class="cc-plat">'+plats+'</div></div>'
-    +'<div class="cc-ftr"><a class="clink" href="#">&#128995; Nostr profile</a>'
-    +'<div style="display:flex;align-items:center;gap:8px;">'+tw+exp(c.exp)
-    +'<button class="rpt" data-name="'+c.name.replace(/"/g,'&quot;')+'">&#9873; Report</button>'
-    +'</div><div class="crat"><span class="stars">'+strs(c.rat)+'</span> '+c.rat+'</div></div>';
-  div.querySelector('.rpt').addEventListener('click',function(e){
-    e.stopPropagation();openReport(this.dataset.name);
-  });
-  if(c.npub){
-    var av = div.querySelector('.cc-av');
-    if(av) loadAvatar(c.npub, av, c.e);
-  }
-  return div;
-}
-
-function renderM(m){
-  var b='';if(m.f)b+='<span class="badge-f">&#9733; Featured</span>';if(m.v)b+='<span class="badge-v">&#10003; Verified</span>';
-  var div=document.createElement('div');
-  div.className='cmc'+(m.f?' feat':'');
-  if(m.url) div.dataset.url=m.url;
-  var urlBtn=m.url?'<a class="clink" href="'+m.url+'" target="_blank" onclick="event.stopPropagation()">&#127760; Website</a>':'';
-  div.innerHTML=
-    '<div class="cmc-hdr"><span class="cmc-flag">'+m.flag+'</span>'
-    +'<div class="cmc-name">'+m.name+'</div>'
-    +'<div class="cmc-loc">&#128205; '+m.city+', '+m.country+'</div>'
-    +(b?'<div class="bdgs">'+b+'</div>':'')+'</div>'
-    +'<div class="cmc-body"><div class="cmc-desc">'+m.desc+'</div>'
-    +(m.freq?'<div class="cmc-meta"><div><div class="cmc-ml">Meetups</div><div class="cmc-mv">'+m.freq+'</div></div></div>':'')
-    +'</div>'
-    +'<div class="cmc-ftr">'+urlBtn+exp(m.exp)
-    +'<button class="rpt" data-name="'+m.name.replace(/"/g,'&quot;')+'">&#9873; Report</button></div>';
-  div.querySelector('.rpt').addEventListener('click',function(){openReport(this.dataset.name);});
-  if(m.url) div.addEventListener('click',function(e){if(!e.target.closest('a')&&!e.target.closest('button'))window.open(m.url,'_blank');});
-  return div;
-}
-
-function render(){
-  var grid=document.getElementById('grid');
-  var nores=document.getElementById('nores');
-  var lbl=document.getElementById('lbl');
-  var items,html_fn,all;
-  var s=sq;
-  if(mode==='p'){
-    items=projects.filter(function(p){
-      return(pfs.type==='all'||p.type===pfs.type)
-        &&(pfs.pay==='all'||p.pay.indexOf(pfs.pay)>-1)
-        &&(pfs.status==='all'||p.st===pfs.status)
-        &&(!s||p.name.toLowerCase().indexOf(s)>-1||p.desc.toLowerCase().indexOf(s)>-1);
-    });
-    all=projects.length;
-    html_fn=renderP;
-    lbl.textContent='Showing '+(items.length===all?'all ':items.length+' of ')+all+' projects';
-  }else if(mode==='c'){
-    items=creators.filter(function(c){
-      return(cfs.cat==='all'||c.cat===cfs.cat)
-        &&(!s||c.name.toLowerCase().indexOf(s)>-1||c.bio.toLowerCase().indexOf(s)>-1);
-    });
-    all=creators.length;
-    html_fn=renderC;
-    lbl.textContent='Showing '+(items.length===all?'all ':items.length+' of ')+all+' creators';
-  }else{
-    items=communities.filter(function(m){
-      return(mfs.reg==='all'||m.reg===mfs.reg)
-        &&(!s||m.name.toLowerCase().indexOf(s)>-1||m.city.toLowerCase().indexOf(s)>-1||m.desc.toLowerCase().indexOf(s)>-1);
-    });
-    all=communities.length;
-    html_fn=renderM;
-    lbl.textContent='Showing '+(items.length===all?'all ':items.length+' of ')+all+' communities';
-  }
-  if(!items.length){grid.innerHTML='';nores.style.display='block';return;}
-  nores.style.display='none';
-  grid.innerHTML='';
-  items.forEach(function(item){grid.appendChild(html_fn(item));});
-
-}
-
-function setMode(m){
-  mode=m;
-  ['p','c','m'].forEach(function(x){document.getElementById('b'+x).classList.toggle('active',x===m);});
-  document.getElementById('pf').style.display=m==='p'?'flex':'none';
-  document.getElementById('cf').style.display=m==='c'?'flex':'none';
-  document.getElementById('mf').style.display=m==='m'?'flex':'none';
-  document.getElementById('sq').value='';sq='';
-  render();
-}
-
-function setPF(type,val,el){
-  if(pfs[type]===val&&val!=='all'){pfs[type]='all';document.querySelectorAll('[data-pf="'+type+'"][data-v="all"]').forEach(function(b){b.classList.add('active');});el.classList.remove('active');}
-  else{pfs[type]=val;document.querySelectorAll('[data-pf="'+type+'"]').forEach(function(b){b.classList.remove('active');});el.classList.add('active');}
-  render();
-}
-function setCF(val,el){cfs.cat=val;document.querySelectorAll('[data-cat]').forEach(function(b){b.classList.remove('active');});el.classList.add('active');render();}
-function setMF(val,el){mfs.reg=val;document.querySelectorAll('[data-reg]').forEach(function(b){b.classList.remove('active');});el.classList.add('active');render();}
-function filterAll(){sq=document.getElementById('sq').value.toLowerCase().trim();render();}
-function doSort(v){
-  if(mode==='p'){if(v==='name')projects.sort(function(a,b){return a.name.localeCompare(b.name);});else if(v==='rating')projects.sort(function(a,b){return b.rat-a.rat;});else projects.sort(function(a,b){return a.id-b.id;});}
-  else if(mode==='c'){if(v==='name')creators.sort(function(a,b){return a.name.localeCompare(b.name);});else if(v==='rating')creators.sort(function(a,b){return b.rat-a.rat;});else creators.sort(function(a,b){return a.id-b.id;});}
-  render();
-}
-
-function openModal(){document.getElementById('mov').classList.add('open');document.body.style.overflow='hidden';}
-function closeModal(){document.getElementById('mov').classList.remove('open');document.body.style.overflow='';}
-function closeModalOut(e){if(e.target===document.getElementById('mov'))closeModal();}
-function switchTab(t,el){
-  document.querySelectorAll('.mtab').forEach(function(x){x.classList.remove('active');});el.classList.add('active');
-  ['p','c','m'].forEach(function(x){document.getElementById('f'+x).classList.toggle('active',x===t);});
-}
-
-function openReport(el){
-  var name = typeof el === 'string' ? el : el.dataset.name;
-  document.getElementById('rmod').dataset.t=name;
-  document.getElementById('rmod').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeReport(){document.getElementById('rmod').classList.remove('open');document.body.style.overflow='';document.querySelectorAll('input[name="rr"]').forEach(function(r){r.checked=false;});}
-function submitReport(){
-  if(!document.querySelector('input[name="rr"]:checked')){alert('Please select a reason.');return;}
-  closeReport();
-  var msg=document.createElement('div');
-  msg.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a1a;border:1px solid #333;color:#e8e8e8;padding:12px 22px;border-radius:10px;font-family:Space Mono,monospace;font-size:13px;z-index:999;';
-  msg.textContent='Report submitted. Thank you.';
-  document.body.appendChild(msg);
-  setTimeout(function(){msg.remove();},3000);
-}
-
-function doCopy(e){
-  e.stopPropagation();
-  navigator.clipboard.writeText('hiddenranger445@minibits.cash').then(function(){
-    var b=document.getElementById('cbtn');b.textContent='Copied!';
-    setTimeout(function(){b.textContent='Copy';},2000);
-  });
-}
-
-render();
-
-/* ============================================================
-   PHASE 3 - NOSTR AVATAR LOADER
-   Tato funkce bude v Fazi 3 nahrazena skutecnym volanim
-   Nostr relay API (NIP-01 kind:0 profil event).
-   
-   Postup:
-   1. Najdi vsechny elementy s data-npub atributem
-   2. Pro kazdy npub zavolej: GET https://api.nostr.band/v0/profiles/{npub}
-   3. Z odpovedi ziskej picture URL z content.picture
-   4. Nastav img.src = picture_url
-   
-   Priklad volani (Faze 3):
-   async function nostrLoadAvatars() {
-     document.querySelectorAll('[data-npub]').forEach(async function(img) {
-       const npub = img.dataset.npub;
-       if (!npub || npub.includes('...')) return;
-       const res = await fetch('https://api.nostr.band/v0/profiles/' + npub);
-       const data = await res.json();
-       const pic = data?.profile?.content?.picture;
-       if (pic) img.src = pic;
-     });
-   }
-   ============================================================ */
-function nostrLoadAvatars() {
-  /* STUB - bude implementovano v Fazi 3 */
-}
-</script>
-<script>
-var SB_URL="https://znxdarfdmnpxemsygpba.supabase.co";
-var SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpueGRhcmZkbW5weGVtc3lncGJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1MjY1MDYsImV4cCI6MjA4ODEwMjUwNn0.RRnuG5WRIfgxEffm6zRqOCTDAinW6YXGZvHRVqWLCQU";
-function sbFetch(t,d){return fetch(SB_URL+"/rest/v1/"+t,{method:"POST",headers:{"Content-Type":"application/json","apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY,"Prefer":"return=minimal"},body:JSON.stringify(d)});}
-function getVal(id){var e=document.getElementById(id);return e?e.value.trim():"";}
-function showMsg(txt,ok){var m=document.createElement("div");m.style.cssText="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:"+(ok?"#2ecc71":"#e74c3c")+";color:#000;padding:12px 24px;border-radius:10px;font-family:Space Mono,monospace;font-size:13px;z-index:9999;font-weight:700;";m.textContent=txt;document.body.appendChild(m);setTimeout(function(){m.remove();},4000);}
-function submitProject(){var n=getVal("p-name"),u=getVal("p-url"),d=getVal("p-desc"),np=getVal("p-npub");var pl=document.querySelector("#fp input[type=\"checkbox\"]");if(!n||!u||!d){showMsg("Please fill in all required fields.",false);return;}if(pl&&!pl.checked){showMsg("Please confirm the pledge.",false);return;}var btn=document.querySelector("#fp .fsub");btn.textContent="Submitting...";btn.disabled=true;var payArr=[];if(document.getElementById("p-pay-ln")&&document.getElementById("p-pay-ln").checked)payArr.push("lightning");if(document.getElementById("p-pay-cashu")&&document.getElementById("p-pay-cashu").checked)payArr.push("cashu");if(document.getElementById("p-pay-other")&&document.getElementById("p-pay-other").checked)payArr.push("other");var ptype=document.getElementById("p-type")?document.getElementById("p-type").value:"Other";sbFetch("listings",{type:"project",name:n,url:u,description:d,npub:np||null,data:{pay:payArr,type:ptype}}).then(function(r){if(r.ok){showMsg("Submitted! Want Verified or Featured? See pricing.",true);closeModal();setTimeout(function(){if(confirm("Get Verified (1500 sats) or Featured (10000 sats)?\nSee pricing page for details."))window.open("pricing.html","_blank");},500);}else r.text().then(function(t){showMsg("Error: "+t,false);});}).catch(function(){showMsg("Network error.",false);}).finally(function(){btn.textContent="Submit Project";btn.disabled=false;});}
-function submitCreator(){
-  var n=getVal("c-name"),np=getVal("c-npub"),b=getVal("c-bio");
-  var sells=getVal("c-sells").split(",").map(function(s){return s.trim();}).filter(Boolean).slice(0,5);
-  var plat=getVal("c-plat").split(",").map(function(s){return s.trim();}).filter(Boolean);
-  var tw=getVal("c-tw");
-  var cats=[];
-  document.querySelectorAll("#c-cats input:checked").forEach(function(cb){cats.push(cb.value);});
-  if(cats.length>3){showMsg("Max 3 categories.",false);return;}
-  var pl=document.querySelector("#fc .pledge input[type=\"checkbox\"]");
-  if(!n||!np||!b||!sells.length||!cats.length){showMsg("Please fill in all required fields.",false);return;}
-  if(pl&&!pl.checked){showMsg("Please confirm the pledge.",false);return;}
-  var btn=document.querySelector("#fc .fsub");btn.textContent="Submitting...";btn.disabled=true;
-  var photoFile=document.getElementById("c-photo")?document.getElementById("c-photo").files[0]:null;
-  function doSubmit(photoB64){
-    sbFetch("listings",{type:"creator",name:n,npub:np,description:b,data:{cats:cats,sells:sells,plat:plat,tw:tw,photo:photoB64||null}})
-    .then(function(r){if(r.ok){showMsg("Submitted! Want Verified or Featured? See pricing.",true);closeModal();setTimeout(function(){if(confirm("Get Verified (1500 sats) or Featured (10000 sats)?\nSee pricing page for details."))window.open("pricing.html","_blank");},500);}else r.text().then(function(t){showMsg("Error: "+t,false);});})
-    .catch(function(){showMsg("Network error.",false);})
-    .finally(function(){btn.textContent="Submit Creator";btn.disabled=false;});
-  }
-  if(photoFile){
-    if(photoFile.size>512000){showMsg("Photo max 500KB.",false);btn.textContent="Submit Creator";btn.disabled=false;return;}
-    var reader=new FileReader();
-    reader.onload=function(e){doSubmit(e.target.result);};
-    reader.readAsDataURL(photoFile);
-  } else {doSubmit(null);}
-}
-function submitCommunity(){
-  var n=getVal("m-name"),np=getVal("m-npub"),ci=getVal("m-city"),co=getVal("m-country"),d=getVal("m-desc");
-  var u=getVal("m-url");
-  var freq=document.getElementById("m-freq")?document.getElementById("m-freq").value:"Monthly";
-  var pl=document.querySelector("#fm .pledge input[type=\"checkbox\"]");
-  if(!n||!ci||!co||!d){showMsg("Please fill in all required fields.",false);return;}
-  if(pl&&!pl.checked){showMsg("Please confirm the pledge.",false);return;}
-  var btn=document.querySelector("#fm .fsub");btn.textContent="Submitting...";btn.disabled=true;
-  sbFetch("listings",{type:"community",name:n,npub:np||null,url:u||null,description:d,data:{city:ci,country:co,freq:freq}})
-  .then(function(r){if(r.ok){showMsg("Submitted! Want Verified or Featured? See pricing.",true);closeModal();setTimeout(function(){if(confirm("Get Verified (1500 sats) or Featured (10000 sats)?\nSee pricing page for details."))window.open("pricing.html","_blank");},500);}else r.text().then(function(t){showMsg("Error: "+t,false);});})
-  .catch(function(){showMsg("Network error.",false);})
-  .finally(function(){btn.textContent="Submit Community";btn.disabled=false;});
-}
-function submitReport(){var r=document.querySelector("input[name=\"rr\"]:checked");if(!r){alert("Please select a reason.");return;}sbFetch("reports",{reason:r.value,listing_id:null}).then(function(){closeReport();showMsg("Report submitted.",true);}).catch(function(){closeReport();});}
-function loadFromSupabase(){
-  fetch(SB_URL+"/rest/v1/listings?status=eq.active&order=submitted_at.desc",{headers:{"apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY}})
-  .then(function(r){return r.json();})
-  .then(function(rows){
-    if(!rows||!rows.length){render();return;}
-    var nextId=1000;
-    rows.forEach(function(row){
-      var now=new Date();var expDate=row.expires_at?new Date(row.expires_at):null;var isExpired=expDate&&expDate<now;
-      var now=new Date();
-      var expDate=row.expires_at?new Date(row.expires_at):null;
-      var isExpired=expDate&&expDate<now;
-      var item={id:nextId++,name:row.name,desc:row.description,npub:row.npub||"",url:row.url||"",
-        st:isExpired?"expired":(row.tier==="featured"?"featured":(row.tier==="verified"?"verified":"active")),
-        f:row.tier==="featured",v:row.tier==="verified"||row.tier==="featured",
-        e:String.fromCodePoint(0x26A1),exp:expDate,fromDB:true};
-      if(row.type==="project"){
-        item.tl=(row.data&&row.data.type)?row.data.type:"Other";
-        item.type=(row.data&&row.data.type)?row.data.type:"other";
-        item.ln="";
-        item.pay=(row.data&&row.data.pay)?row.data.pay:[];
-        item.av=row.url?["web"]:[];
-        item.oss=false;item.gh="";item.tw="";
-        item.act="Community submitted";
-        projects.push(item);
-      }else if(row.type==="creator"){
-        item.handle=row.npub?row.npub.substring(0,12)+"...":"nostr";
-        item.bio=row.description;
-        var cats=(row.data&&row.data.cats)?row.data.cats:[];
-        item.cat=cats[0]||"other";
-        item.cl=cats.length?cats.map(function(c){return c.charAt(0).toUpperCase()+c.slice(1);}).join(" · "):"Creator";
-        item.sells=(row.data&&row.data.sells)?row.data.sells:[];
-        item.plat=(row.data&&row.data.plat)?row.data.plat:["Nostr"];
-        item.tw=(row.data&&row.data.tw)?row.data.tw:"";
-        item.photo=(row.data&&row.data.photo)?row.data.photo:null;
-        item.rat=0;item.gh="";
-        item.act="Community submitted";
-        creators.push(item);
-      }else if(row.type==="community"){
-        var flags={"czech republic":"🇨🇿","slovakia":"🇸🇰","germany":"🇩🇪","austria":"🇦🇹","poland":"🇵🇱","hungary":"🇭🇺","usa":"🇺🇸","united states":"🇺🇸","uk":"🇬🇧","united kingdom":"🇬🇧","france":"🇫🇷","spain":"🇪🇸","italy":"🇮🇹","netherlands":"🇳🇱","switzerland":"🇨🇭","portugal":"🇵🇹","sweden":"🇸🇪","norway":"🇳🇴","denmark":"🇩🇰","finland":"🇫🇮","japan":"🇯🇵","brazil":"🇧🇷","australia":"🇦🇺","canada":"🇨🇦","global":"🌍"};
-        var cLow=(row.data&&row.data.country)?row.data.country.toLowerCase():"";
-        item.flag=flags[cLow]||"🌍";
-        item.reg=cLow||"other";
-        item.city=(row.data&&row.data.city)?row.data.city:"";
-        item.country=(row.data&&row.data.country)?row.data.country:"";
-        item.freq=(row.data&&row.data.freq)?row.data.freq:"";
-        item.url=row.url||"";
-        item.ln="";item.nostr="";
-        item.act="Community submitted";
-        communities.push(item);
-      }
-    });
-    updateCounts();
-    render();
-  })
-  .catch(function(){render();});
-}
-function updateCounts(){
-  var cp=document.getElementById('cnt-p');
-  var cc=document.getElementById('cnt-c');
-  var cm=document.getElementById('cnt-m');
-  var bp=document.getElementById('bp');
-  var bc=document.getElementById('bc');
-  var bm=document.getElementById('bm');
-  var np=projects.length,nc=creators.length,nm=communities.length;
-  if(cp) cp.textContent=np;
-  if(cc) cc.textContent=nc;
-  if(cm) cm.textContent=nm;
-  if(bp) bp.innerHTML='Projects <span class="mcnt">'+np+'</span>';
-  if(bc) bc.innerHTML='Creators <span class="mcnt">'+nc+'</span>';
-  if(bm) bm.innerHTML='Communities <span class="mcnt">'+nm+'</span>';
-}
-document.addEventListener("DOMContentLoaded",function(){
-  var ph=document.getElementById("c-photo");
-  if(ph){ph.addEventListener("change",function(){
-    var f=this.files[0];if(!f)return;
-    var r=new FileReader();
-    r.onload=function(e){
-      document.getElementById("c-photo-img").src=e.target.result;
-      document.getElementById("c-photo-preview").style.display="block";
-    };r.readAsDataURL(f);
-  });}
-  // Max 3 cats
-  document.querySelectorAll("#c-cats input").forEach(function(cb){
-    cb.addEventListener("change",function(){
-      var checked=document.querySelectorAll("#c-cats input:checked");
-      if(checked.length>3)this.checked=false;
-    });
-  });
-});
-loadFromSupabase();
-</script>
+  var plats=c.plat.map(function(p){var pn=typeof p==='object'?p.name:p;var pu=typeof p==='object'?p.url:null;return pu?'<a class="plat" href="'+pu+'" target="_blank">'+pn+'</a>':'<div class="plat">'+pn+'</div>';
 </body>
 </html>
