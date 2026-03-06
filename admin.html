@@ -231,8 +231,21 @@ function sbPatch(table,id,data){
 }
 
 // LOAD
+function purgeOldRemoved(){
+  var cutoff=new Date();
+  cutoff.setDate(cutoff.getDate()-30);
+  var iso=cutoff.toISOString();
+  fetch(SB_URL+"/rest/v1/listings?status=eq.removed&submitted_at=lt."+iso,{
+    method:"DELETE",
+    headers:{"apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY}
+  }).then(function(r){
+    if(r.ok) console.log("Auto-purge: removed listings older than 30 days deleted");
+  });
+}
+
 function loadAll(){
   if(!sessionStorage.getItem("admin")) return;
+  purgeOldRemoved();
   sbGet("listings?order=submitted_at.desc&limit=200&select=*").then(function(rows){
     allListings=rows||[];
     updateStats();
