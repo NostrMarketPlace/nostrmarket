@@ -77,6 +77,7 @@ header{position:sticky;top:0;z-index:10;border-bottom:1px solid var(--border);pa
 .btn-remove{background:rgba(231,76,60,.2);color:var(--red);}
 .btn-restore{background:rgba(46,204,113,.2);color:var(--green);}
 .btn-other{background:rgba(155,89,182,.15);color:#9b59b6;border-color:rgba(155,89,182,.3);}
+.btn-edit{background:rgba(52,152,219,.15);color:#3498db;border-color:rgba(52,152,219,.3);}
 .btn-resolve{background:rgba(46,204,113,.2);color:var(--green);}
 .empty{text-align:center;padding:48px;color:var(--muted);font-size:14px;}
 .loading{text-align:center;padding:48px;color:var(--muted);font-family:'Space Mono',monospace;font-size:13px;}
@@ -271,6 +272,7 @@ function renderListings(filter){
     var link=r.url?'<a href="'+r.url+'" target="_blank">↗</a>':"";
     var actions="";
     if(r.status!=="removed"){
+      actions+='<button class="act-btn btn-edit" onclick="openEdit('+r.id+')">Edit</button>';
       if(r.tier==="free"){
       actions+='<button class="act-btn btn-verify" onclick="setTier('+r.id+',\'verified\')">Verify</button>';
       actions+='<button class="act-btn btn-other" onclick="setTier('+r.id+',\'verified\')" title="Other payment method">Other ✓</button>';
@@ -353,8 +355,71 @@ function escHtml(s){
   return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
 
+function openEdit(id){
+  var r=allListings.find(function(x){return x.id===id;});
+  if(!r) return;
+  document.getElementById('edit-id').value=r.id;
+  document.getElementById('edit-name').value=r.name||'';
+  document.getElementById('edit-url').value=r.url||'';
+  document.getElementById('edit-desc').value=r.description||'';
+  var d=r.data||{};
+  document.getElementById('edit-tw').value=d.tw||'';
+  document.getElementById('edit-fb').value=d.fb||'';
+  document.getElementById('edit-ig').value=d.ig||'';
+  document.getElementById('edit-other-social').value=d.social_other||'';
+  document.getElementById('edit-modal').style.display='block';
+}
+function saveEdit(){
+  var id=parseInt(document.getElementById('edit-id').value);
+  var r=allListings.find(function(x){return x.id===id;});
+  var newData=Object.assign({},r?r.data:{});
+  var tw=document.getElementById('edit-tw').value.trim();
+  var fb=document.getElementById('edit-fb').value.trim();
+  var ig=document.getElementById('edit-ig').value.trim();
+  var so=document.getElementById('edit-other-social').value.trim();
+  if(tw) newData.tw=tw; else delete newData.tw;
+  if(fb) newData.fb=fb; else delete newData.fb;
+  if(ig) newData.ig=ig; else delete newData.ig;
+  if(so) newData.social_other=so; else delete newData.social_other;
+  sbPatch('listings',id,{
+    name:document.getElementById('edit-name').value.trim(),
+    url:document.getElementById('edit-url').value.trim(),
+    description:document.getElementById('edit-desc').value.trim(),
+    data:newData
+  }).then(function(){
+    document.getElementById('edit-modal').style.display='none';
+    showToast('Listing updated!');
+    loadAll();
+  }).catch(function(){showToast('Error saving!');});
+}
+
 // Init
 if(sessionStorage.getItem("admin")==="1") loadAll();
 </script>
+
+<div id="edit-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9000;overflow-y:auto;">
+  <div style="background:#1a1a1a;border:1px solid #333;border-radius:12px;max-width:480px;margin:40px auto;padding:28px;">
+    <h3 style="margin:0 0 20px;font-size:16px;color:#f5a623;">Edit Listing</h3>
+    <input type="hidden" id="edit-id">
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div><label style="font-size:12px;color:#888;display:block;margin-bottom:4px;">Name</label><input id="edit-name" type="text" style="width:100%;background:#111;border:1px solid #333;color:#fff;padding:8px 10px;border-radius:6px;font-family:Space Mono,monospace;font-size:13px;box-sizing:border-box;"></div>
+      <div><label style="font-size:12px;color:#888;display:block;margin-bottom:4px;">Website URL</label><input id="edit-url" type="url" style="width:100%;background:#111;border:1px solid #333;color:#fff;padding:8px 10px;border-radius:6px;font-family:Space Mono,monospace;font-size:13px;box-sizing:border-box;"></div>
+      <div><label style="font-size:12px;color:#888;display:block;margin-bottom:4px;">Description</label><textarea id="edit-desc" rows="3" style="width:100%;background:#111;border:1px solid #333;color:#fff;padding:8px 10px;border-radius:6px;font-family:Space Mono,monospace;font-size:13px;box-sizing:border-box;resize:vertical;"></textarea></div>
+      <div id="edit-social-section">
+        <label style="font-size:12px;color:#888;display:block;margin-bottom:8px;">Social Links</label>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;width:24px;">𝕏</span><input id="edit-tw" type="url" placeholder="https://x.com/..." style="flex:1;background:#111;border:1px solid #333;color:#fff;padding:6px 10px;border-radius:6px;font-family:Space Mono,monospace;font-size:12px;"></div>
+          <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;width:24px;">📘</span><input id="edit-fb" type="url" placeholder="https://facebook.com/..." style="flex:1;background:#111;border:1px solid #333;color:#fff;padding:6px 10px;border-radius:6px;font-family:Space Mono,monospace;font-size:12px;"></div>
+          <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;width:24px;">📷</span><input id="edit-ig" type="url" placeholder="https://instagram.com/..." style="flex:1;background:#111;border:1px solid #333;color:#fff;padding:6px 10px;border-radius:6px;font-family:Space Mono,monospace;font-size:12px;"></div>
+          <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;width:24px;">🔗</span><input id="edit-other-social" type="url" placeholder="https://... (any other link)" style="flex:1;background:#111;border:1px solid #333;color:#fff;padding:6px 10px;border-radius:6px;font-family:Space Mono,monospace;font-size:12px;"></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:20px;">
+      <button onclick="saveEdit()" style="flex:1;background:#f5a623;color:#000;border:none;padding:10px;border-radius:8px;font-family:Space Mono,monospace;font-weight:700;font-size:13px;cursor:pointer;">Save</button>
+      <button onclick="document.getElementById('edit-modal').style.display='none'" style="flex:1;background:#333;color:#fff;border:none;padding:10px;border-radius:8px;font-family:Space Mono,monospace;font-size:13px;cursor:pointer;">Cancel</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
