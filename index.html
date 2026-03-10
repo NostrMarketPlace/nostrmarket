@@ -504,7 +504,7 @@ function renderP(p){
     +'<div class="cdesc">'+p.desc+'</div>'
     +'<div class="ctags">'+p.pay.map(payT).join('')+p.av.map(function(x){return avT(x,p.url);}).join('')+(p.oss?'<span class="tag to">OSS</span>':'')+'</div>'
     +'<div class="cact"><div class="adot" style="background:'+dc+'"></div>'+(p.act||'')+'&nbsp;&nbsp;'+exp(p.exp)+'</div>'
-    +'<div class="cftr"><div class="clnks">'+gh+tw+fb+ig+so+'</div>'
+    +'<div class="cftr"><div class="clnks">'+gh+tw+nostr+fb+ig+so+'</div>'
     +'<div class="cftr-r"><div class="crat">'
     +'<button class="rpt" data-name="'+p.name.replace(/"/g,'&quot;')+'">&#9873; Report</button>'
     +'</div></div></div>';
