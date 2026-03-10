@@ -381,10 +381,26 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24
       </div>
       <div class="fg"><label>Description *</label><input type="text" id="m-desc" maxlength="140" placeholder="What is your community about?"></div>
       <div class="frow2">
-        <div class="fg"><label>Region</label><select><option value="cz">Czech</option><option value="sk">Slovak</option><option value="eu">Europe</option><option value="global">Global</option></select></div>
-        <div class="fg"><label>Meetup Frequency</label><select id="m-freq"><option>Monthly</option><option>Weekly</option><option>Bi-monthly</option><option>Quarterly</option><option>Online only</option></select></div>
+        <div class="fg"><label>Region</label><select id="m-reg"><option value="cz">Czech</option><option value="sk">Slovak</option><option value="eu">Europe</option><option value="global">Global</option></select></div>
+        <div class="fg"><label>Meetup Frequency <span style="font-weight:400;color:var(--muted);font-size:11px;">(select all that apply)</span></label>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;">
+            <label class="cat-opt"><input type="checkbox" name="m-freq" value="Weekly"> Weekly</label>
+            <label class="cat-opt"><input type="checkbox" name="m-freq" value="Bi-weekly"> Bi-weekly</label>
+            <label class="cat-opt"><input type="checkbox" name="m-freq" value="Monthly"> Monthly</label>
+            <label class="cat-opt"><input type="checkbox" name="m-freq" value="Quarterly"> Quarterly</label>
+            <label class="cat-opt"><input type="checkbox" name="m-freq" value="Online only"> Online only</label>
+          </div>
+        </div>
       </div>
       <div class="fg"><label>Website</label><input type="url" id="m-url" placeholder="https://..."></div>
+      <div class="fg"><label>Social Links</label>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px;">
+          <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;min-width:20px;">𝕏</span><input type="url" id="m-tw" placeholder="https://x.com/..." style="flex:1"></div>
+          <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;min-width:20px;">📘</span><input type="url" id="m-fb" placeholder="https://facebook.com/..." style="flex:1"></div>
+          <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;min-width:20px;">📷</span><input type="url" id="m-ig" placeholder="https://instagram.com/..." style="flex:1"></div>
+          <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;min-width:20px;">🔗</span><input type="url" id="m-social-other" placeholder="https://... (any link)" style="flex:1"></div>
+        </div>
+      </div>
       <div class="pledge"><label><input type="checkbox"> I confirm this is a genuine Bitcoin/Nostr community and not spam or commercial promotion.</label></div>
       <button class="fsub" onclick="submitCommunity()">Submit Community &#9889;</button>
     </div>
@@ -544,6 +560,10 @@ function renderM(m){
   div.className='cmc'+(m.f?' feat':'');
   if(m.url) div.dataset.url=m.url;
   var urlBtn=m.url?'<a class="clink" href="'+m.url+'" target="_blank" onclick="event.stopPropagation()">&#127760; Website</a>':'';
+  var tw=m.tw?'<a class="clink" href="'+m.tw+'" target="_blank" onclick="event.stopPropagation()">𝕏</a>':'';
+  var fb=m.fb?'<a class="clink" href="'+m.fb+'" target="_blank" onclick="event.stopPropagation()" style="color:#4267B2"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.5h-2.8V24C19.62 23.1 24 18.1 24 12.07z"/></svg></a>':'';
+  var ig=m.ig?'<a class="clink" href="'+m.ig+'" target="_blank" onclick="event.stopPropagation()" style="color:#E1306C"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>':'';
+  var so=m.so?'<a class="clink" href="'+m.so+'" target="_blank" onclick="event.stopPropagation()">🔗</a>':'';
   div.innerHTML=
     '<div class="cmc-hdr"><span class="cmc-flag">'+m.flag+'</span>'
     +'<div class="cmc-name">'+m.name+'</div>'
@@ -552,7 +572,9 @@ function renderM(m){
     +'<div class="cmc-body"><div class="cmc-desc">'+m.desc+'</div>'
     +(m.freq?'<div class="cmc-meta"><div><div class="cmc-ml">Meetups</div><div class="cmc-mv">'+m.freq+'</div></div></div>':'')
     +'</div>'
-    +'<div class="cmc-ftr">'+urlBtn+exp(m.exp)
+    +'<div class="cmc-ftr">'+urlBtn
+    +(tw||fb||ig||so?'<span style="display:flex;gap:8px;align-items:center;">'+tw+fb+ig+so+'</span>':'')
+    +exp(m.exp)
     +'<button class="rpt" data-name="'+m.name.replace(/"/g,'&quot;')+'">&#9873; Report</button></div>';
   div.querySelector('.rpt').addEventListener('click',function(){openReport(this.dataset.name);});
   if(m.url) div.addEventListener('click',function(e){if(!e.target.closest('a')&&!e.target.closest('button'))window.open(m.url,'_blank');});
@@ -720,17 +742,72 @@ function submitCreator(){
 function submitCommunity(){
   var n=getVal("m-name"),np=getVal("m-npub"),ci=getVal("m-city"),co=getVal("m-country"),d=getVal("m-desc");
   var u=getVal("m-url");
-  var freq=document.getElementById("m-freq")?document.getElementById("m-freq").value:"Monthly";
+  var freqChecked=[];document.querySelectorAll("input[name='m-freq']:checked").forEach(function(cb){freqChecked.push(cb.value);});
+  var freq=freqChecked.length?freqChecked.join(", "):"";
+  var tw=getVal("m-tw");var fb=getVal("m-fb");var ig=getVal("m-ig");var so=getVal("m-social-other");
   var pl=document.querySelector("#fm .pledge input[type=\"checkbox\"]");
   if(!n||!ci||!co||!d){showMsg("Please fill in all required fields.",false);return;}
   if(pl&&!pl.checked){showMsg("Please confirm the pledge.",false);return;}
   var btn=document.querySelector("#fm .fsub");btn.textContent="Submitting...";btn.disabled=true;
-  sbFetch("listings",{type:"community",name:n,npub:np||null,url:u||null,description:d,data:{city:ci,country:co,freq:freq}})
+  sbFetch("listings",{type:"community",name:n,npub:np||null,url:u||null,description:d,data:{city:ci,country:co,freq:freq,tw:tw||null,fb:fb||null,ig:ig||null,social_other:so||null}})
   .then(function(r){if(r.ok){showMsg("Submitted! Want Verified or Featured? See pricing.",true);closeModal();setTimeout(function(){if(confirm("Get Verified (1500 sats) or Featured (10000 sats)?\nSee pricing page for details."))window.open("pricing.html","_blank");},500);}else r.text().then(function(t){showMsg("Error: "+t,false);});})
   .catch(function(){showMsg("Network error.",false);})
   .finally(function(){btn.textContent="Submit Community";btn.disabled=false;});
 }
 function submitReport(){var r=document.querySelector("input[name=\"rr\"]:checked");if(!r){alert("Please select a reason.");return;}sbFetch("reports",{reason:r.value,listing_id:null}).then(function(){closeReport();showMsg("Report submitted.",true);}).catch(function(){closeReport();});}
+function countryToFlag(country){
+  // Mapování názvů/zkratek -> ISO-2 kódy
+  var nameToCode={
+    // Zkratky
+    "usa":"US","uk":"GB","uae":"AE","ussr":"RU",
+    // Anglické názvy
+    "afghanistan":"AF","albania":"AL","algeria":"DZ","andorra":"AD","angola":"AO",
+    "argentina":"AR","armenia":"AM","australia":"AU","austria":"AT","azerbaijan":"AZ",
+    "bahrain":"BH","bangladesh":"BD","belarus":"BY","belgium":"BE","bolivia":"BO",
+    "bosnia":"BA","brazil":"BR","bulgaria":"BG","cambodia":"KH","canada":"CA",
+    "chile":"CL","china":"CN","colombia":"CO","croatia":"HR","cuba":"CU",
+    "czech republic":"CZ","czechia":"CZ","denmark":"DK","ecuador":"EC","egypt":"EG",
+    "estonia":"EE","ethiopia":"ET","finland":"FI","france":"FR","georgia":"GE",
+    "germany":"DE","ghana":"GH","greece":"GR","hungary":"HU","iceland":"IS",
+    "india":"IN","indonesia":"ID","iran":"IR","iraq":"IQ","ireland":"IE",
+    "israel":"IL","italy":"IT","jamaica":"JM","japan":"JP","jordan":"JO",
+    "kazakhstan":"KZ","kenya":"KE","kuwait":"KW","latvia":"LV","lebanon":"LB",
+    "lithuania":"LT","luxembourg":"LU","malaysia":"MY","malta":"MT","mexico":"MX",
+    "moldova":"MD","monaco":"MC","mongolia":"MN","morocco":"MA","netherlands":"NL",
+    "new zealand":"NZ","nigeria":"NG","north korea":"KP","norway":"NO","oman":"OM",
+    "pakistan":"PK","panama":"PA","peru":"PE","philippines":"PH","poland":"PL",
+    "portugal":"PT","qatar":"QA","romania":"RO","russia":"RU","saudi arabia":"SA",
+    "serbia":"RS","singapore":"SG","slovakia":"SK","slovenia":"SI","south africa":"ZA",
+    "south korea":"KR","spain":"ES","sri lanka":"LK","sweden":"SE","switzerland":"CH",
+    "taiwan":"TW","thailand":"TH","turkey":"TR","ukraine":"UA","united arab emirates":"AE",
+    "united kingdom":"GB","united states":"US","uruguay":"UY","uzbekistan":"UZ",
+    "venezuela":"VE","vietnam":"VN","yemen":"YE","zimbabwe":"ZW",
+    // Lokální názvy
+    "slovensko":"SK","slovenská republika":"SK","česká republika":"CZ","česko":"CZ",
+    "německo":"DE","rakúsko":"AT","poľsko":"PL","maďarsko":"HU","chorvátsko":"HR",
+    "österreich":"AT","deutschland":"DE","schweiz":"CH","belgique":"BE","españa":"ES",
+    "france":"FR","italia":"IT","polska":"PL","magyarország":"HU","hrvatska":"HR",
+    "россия":"RU","украина":"UA","беларусь":"BY","србија":"RS","türkiye":"TR",
+    "日本":"JP","中国":"CN","한국":"KR","brasil":"BR","méxico":"MX"
+  };
+  if(!country||country==="global"||country==="worldwide"||country==="international") return "🌍";
+  var c=country.toLowerCase().trim();
+  // Přímý lookup
+  if(nameToCode[c]) return isoToFlag(nameToCode[c]);
+  // Zkus jestli je to už ISO-2 kód (2 písmena)
+  if(/^[a-z]{2}$/.test(c)) return isoToFlag(c.toUpperCase());
+  // Zkus najít shodu na začátku (např. "Czech Republic (Prague)" -> "czech republic")
+  for(var k in nameToCode){
+    if(c.indexOf(k)===0||k.indexOf(c)===0) return isoToFlag(nameToCode[k]);
+  }
+  return "🌍";
+}
+function isoToFlag(iso){
+  // Emoji vlajka = Regional Indicator letters (U+1F1E6 + offset)
+  if(!iso||iso.length!==2) return "🌍";
+  var base=0x1F1E6-65;
+  return String.fromCodePoint(base+iso.charCodeAt(0))+String.fromCodePoint(base+iso.charCodeAt(1));
+}
 function loadFromSupabase(){
   fetch(SB_URL+"/rest/v1/listings?status=eq.active&order=submitted_at.desc",{headers:{"apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY}})
   .then(function(r){return r.json();})
@@ -770,14 +847,17 @@ function loadFromSupabase(){
         item.act="Community submitted";
         creators.push(item);
       }else if(row.type==="community"){
-        var flags={"czech republic":"🇨🇿","slovakia":"🇸🇰","germany":"🇩🇪","austria":"🇦🇹","poland":"🇵🇱","hungary":"🇭🇺","usa":"🇺🇸","united states":"🇺🇸","uk":"🇬🇧","united kingdom":"🇬🇧","france":"🇫🇷","spain":"🇪🇸","italy":"🇮🇹","netherlands":"🇳🇱","switzerland":"🇨🇭","portugal":"🇵🇹","sweden":"🇸🇪","norway":"🇳🇴","denmark":"🇩🇰","finland":"🇫🇮","japan":"🇯🇵","brazil":"🇧🇷","australia":"🇦🇺","canada":"🇨🇦","global":"🌍"};
         var cLow=(row.data&&row.data.country)?row.data.country.toLowerCase():"";
-        item.flag=flags[cLow]||"🌍";
+        item.flag=countryToFlag(cLow);
         item.reg=cLow||"other";
         item.city=(row.data&&row.data.city)?row.data.city:"";
         item.country=(row.data&&row.data.country)?row.data.country:"";
         item.freq=(row.data&&row.data.freq)?row.data.freq:"";
         item.url=row.url||"";
+        item.tw=(row.data&&row.data.tw)?row.data.tw:"";
+        item.fb=(row.data&&row.data.fb)?row.data.fb:"";
+        item.ig=(row.data&&row.data.ig)?row.data.ig:"";
+        item.so=(row.data&&row.data.social_other)?row.data.social_other:"";
         item.ln="";item.nostr="";
         item.act="Community submitted";
         communities.push(item);
