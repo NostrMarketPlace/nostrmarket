@@ -399,11 +399,15 @@ function saveEdit(){
     url:document.getElementById('edit-url').value.trim(),
     description:document.getElementById('edit-desc').value.trim(),
     data:newData
-  }).then(function(){
-    document.getElementById('edit-modal').style.display='none';
-    showToast('Listing updated!');
-    loadAll();
-  }).catch(function(){showToast('Error saving!');});
+  }).then(function(r){
+    if(r && r.ok){
+      document.getElementById('edit-modal').style.display='none';
+      showToast('Listing updated!');
+      setTimeout(function(){loadAll();},300);
+    } else {
+      r.text().then(function(t){showToast('Error: '+t.substring(0,80));});
+    }
+  }).catch(function(err){showToast('Network error: '+err.message);});
 }
 
 // Init
